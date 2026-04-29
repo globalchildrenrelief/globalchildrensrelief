@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Thank You</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.box {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Thank you for your donation ❤️</h2>
+  <p>Your support means a lot 🙏</p>
+
+  <input id="name" placeholder="Your name">
+  <input id="amount" placeholder="Amount ($)">
+
+  <button onclick="saveDonor()">Submit</button>
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARCR-yqdy8MKCUP18vZZsos_hM1FSoAE",
+  authDomain: "global-child-support-fund.firebaseapp.com",
+  projectId: "global-child-support-fund",
+  storageBucket: "global-child-support-fund.appspot.com",
+  messagingSenderId: "866092013672",
+  appId: "1:866092013672:web:b7608e53549df2909183dd"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveDonor = async function () {
+  const name = document.getElementById("name").value;
+  const amount = document.getElementById("amount").value;
+
+  if (!name || !amount) {
+    alert("Fill all fields");
+    return;
+  }
+
+  await addDoc(collection(db, "donors"), {
+    name,
+    amount,
+    time: new Date().toISOString()
+  });
+
+  alert("Thank you! Donation saved ❤️");
+
+  window.location.href = "index.html";
+};
+</script>
+
+</body>
+</html>
