@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+
+<style>
+body{font-family:Arial;background:#f4f6f8;padding:20px;}
+.container{max-width:700px;margin:auto;background:#fff;padding:20px;border-radius:15px;}
+input,textarea{width:100%;padding:10px;margin-top:10px;border-radius:8px;border:1px solid #ccc;}
+button{padding:12px;background:#00a651;color:#fff;border:none;border-radius:8px;margin-top:10px;width:100%;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Admin Panel</h2>
+
+<input id="title" placeholder="Title">
+<textarea id="story" placeholder="Story"></textarea>
+<input id="image" placeholder="img.jpg">
+<input id="video" placeholder="video.mp4">
+<input id="report" placeholder="report1.jpg">
+<input id="goal" placeholder="2000">
+<input id="min" placeholder="5">
+<input id="max" placeholder="2000">
+<textarea id="share" placeholder="Share message"></textarea>
+
+<button onclick="save()">Save</button>
+
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* 🔴 PASTE YOUR REAL KEYS HERE */
+const firebaseConfig = {
+apiKey: "PUT KEY",
+authDomain: "PUT KEY",
+projectId: "PUT KEY",
+storageBucket: "PUT KEY",
+messagingSenderId: "PUT KEY",
+appId: "PUT KEY"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* LOAD DATA */
+async function load(){
+let ref = doc(db,"site","data");
+let snap = await getDoc(ref);
+
+if(snap.exists()){
+let d = snap.data();
+document.getElementById("title").value = d.title || "";
+document.getElementById("story").value = d.story || "";
+document.getElementById("image").value = d.image || "";
+document.getElementById("video").value = d.video || "";
+document.getElementById("report").value = d.report || "";
+document.getElementById("goal").value = d.goal || "";
+document.getElementById("min").value = d.min || "";
+document.getElementById("max").value = d.max || "";
+document.getElementById("share").value = d.share || "";
+}
+}
+
+/* SAVE DATA */
+window.save = async function(){
+await setDoc(doc(db,"site","data"),{
+title: title.value,
+story: story.value,
+image: image.value,
+video: video.value,
+report: report.value,
+goal: goal.value,
+min: min.value,
+max: max.value,
+share: share.value
+});
+
+alert("Saved globally ✅");
+}
+
+load();
+</script>
+
+</body>
+</html>
