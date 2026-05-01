@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Child Support</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#f6f7f9;}
+.top-card{max-width:520px;margin:20px auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08);}
+.image-box img{width:100%;height:260px;object-fit:cover;}
+.content{padding:20px}
+.circle-wrap{display:flex;align-items:center;gap:15px;margin-bottom:10px;}
+.circle{width:60px;height:60px;border-radius:50%;background:conic-gradient(#00a651 0%, #eee 0%);display:flex;align-items:center;justify-content:center;font-weight:bold;}
+.progress{height:8px;background:#eee;border-radius:10px;margin:10px 0;}
+.fill{height:100%;background:#00a651;width:0%;border-radius:10px;}
+.amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.amount-grid button{padding:14px;border-radius:12px;border:1px solid #ddd;background:#fff;font-weight:bold;cursor:pointer;}
+.amount-grid button.active{background:#00a651;color:#fff;}
+#customAmount{width:100%;padding:16px;font-size:18px;border-radius:12px;border:2px solid #ccc;margin-top:10px;}
+.btn-row{display:flex;gap:10px;margin-top:10px;}
+.btn{flex:1;padding:16px;border:none;border-radius:30px;font-weight:bold;cursor:pointer;font-size:18px;}
+.donate{background:linear-gradient(45deg,#34d058,#00a651);color:#fff;}
+.share{background:#0d5c2b;color:#fff;}
+.container{max-width:900px;margin:auto;padding:20px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.card{background:#fff;padding:20px;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,.05);}
+video{width:100%;border-radius:10px;}
+.footer{margin-top:40px;padding:25px;background:#fff;border-top:1px solid #eee;text-align:center;}
+.secure{font-size:14px;color:#555;margin-bottom:10px;}
+.brand{font-weight:bold;font-size:16px;margin-top:10px;}
+.copy{font-size:12px;color:#999;margin-top:10px;}
+#popup{position:fixed;bottom:20px;left:20px;background:#fff;padding:12px 15px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,.2);display:none;font-size:14px;z-index:999;}
+#name,#comment{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:1px solid #ccc;}
+#comment{height:80px;}
+#commentList p{background:#f1f1f1;padding:10px;border-radius:8px;margin-top:8px;}
+</style>
+</head>
+
+<body>
+
+<div class="top-card">
+<div class="image-box">
+<img src="(. Put your key - image link )">
+</div>
+
+<div class="content">
+<h2>Emergency Medical Help for Children 🚑</h2>
+<p style="color:#00a651;font-weight:bold;">Global Children Relief</p>
+
+<div class="circle-wrap">
+<div class="circle">12%</div>
+<div>
+<p>$240 raised of $2,000</p>
+<small>18 donors</small>
+</div>
+</div>
+
+<div class="progress">
+<div class="fill" style="width:12%"></div>
+</div>
+
+<div class="amount-grid">
+<button onclick="setAmount(event,5)">$5</button>
+<button onclick="setAmount(event,10)">$10</button>
+<button onclick="setAmount(event,20)">$20</button>
+<button onclick="setAmount(event,50)">$50</button>
+<button onclick="setAmount(event,100)">$100</button>
+<button onclick="setAmount(event,200)">$200</button>
+<button onclick="setAmount(event,500)">$500</button>
+<button onclick="setAmount(event,1000)">$1000</button>
+<button onclick="setAmount(event,2000)">$2000</button>
+</div>
+
+<input id="customAmount" placeholder="$ Enter amount">
+
+<div class="btn-row">
+<button class="btn donate" onclick="payNow()">Donate</button>
+<button class="btn share" onclick="shareWhatsApp()">Share</button>
+</div>
+
+<p style="text-align:center;color:#00a651;font-weight:bold;margin-top:10px;">
+💚 Suggested: $5 • $10 • $20
+</p>
+
+<p style="text-align:center;color:#666;margin-top:5px;">
+🚑 Urgent: Children need medical help right now. Even $5 can save a life.
+</p>
+
+<p style="text-align:center;color:#777;font-size:13px;margin-top:5px;">
+🔒 Safe & secure donation • Instant confirmation
+</p>
+
+</div>
+</div>
+
+<div class="container">
+<div class="info-grid">
+
+<div class="card">
+<h3>Story Video</h3>
+<video controls>
+<source src="(. Put your key - video link )">
+</video>
+</div>
+
+<div class="card">
+<h3>💖 Recent Donations</h3>
+<div id="donationList"></div>
+</div>
+
+<div class="card">
+<h3>Live Comments</h3>
+<input id="name" placeholder="Your name">
+<textarea id="comment" placeholder="Write your comment..."></textarea>
+<button onclick="postComment()">Post Comment</button>
+<div id="commentList"></div>
+</div>
+
+</div>
+</div>
+
+<div id="popup"></div>
+
+<script>
+function shareWhatsApp(){
+let msg="Emergency Medical Help for Children 🚑\n\nDonate here:\n(. Put your key - flutterwave link )";
+window.open("https://wa.me/?text="+encodeURIComponent(msg));
+}
+
+function setAmount(e,a){
+document.querySelectorAll(".amount-grid button").forEach(b=>b.classList.remove("active"));
+e.target.classList.add("active");
+document.getElementById("customAmount").value="$"+a;
+}
+
+function payNow(){
+let amount=document.getElementById("customAmount").value.replace("$","")||5;
+let name=prompt("Enter your name");
+
+if(!name)return;
+
+window.location.href="(. Put your key - flutterwave link )?amount="+amount+"&name="+name;
+}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"(. Put your key )",
+authDomain:"(. Put your key )",
+projectId:"(. Put your key )",
+storageBucket:"(. Put your key )",
+messagingSenderId:"(. Put your key )",
+appId:"(. Put your key )"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+/* SAVE DONATION AFTER REDIRECT */
+const urlParams=new URLSearchParams(window.location.search);
+const name=urlParams.get("name");
+const amount=urlParams.get("amount");
+
+if(name && amount){
+addDoc(collection(db,"donations"),{
+name,
+amount,
+time:Date.now()
+});
+}
+
+/* SHOW DONATIONS */
+const dq=query(collection(db,"donations"),orderBy("time","desc"));
+onSnapshot(dq,(snapshot)=>{
+let list=document.getElementById("donationList");
+list.innerHTML="";
+snapshot.forEach(doc=>{
+let d=doc.data();
+list.innerHTML+=`<p>💖 <b>${d.name}</b> donated $${d.amount}</p>`;
+});
+});
+
+/* COMMENTS */
+let posting=false;
+
+window.postComment=async function(){
+if(posting) return;
+
+let name=document.getElementById("name").value;
+let text=document.getElementById("comment").value;
+
+if(!name || !text){
+alert("Fill all fields");
+return;
+}
+
+posting=true;
+
+await addDoc(collection(db,"comments"),{
+name,text,time:Date.now()
+});
+
+document.getElementById("name").value="";
+document.getElementById("comment").value="";
+posting=false;
+};
+
+const q=query(collection(db,"comments"),orderBy("time","desc"));
+onSnapshot(q,(snapshot)=>{
+let list=document.getElementById("commentList");
+list.innerHTML="";
+snapshot.forEach(doc=>{
+let d=doc.data();
+list.innerHTML+=`<p>💬 <b>${d.name}</b>: ${d.text}</p>`;
+});
+});
+</script>
+
+</body>
+</html>
