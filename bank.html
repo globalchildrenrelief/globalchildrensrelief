@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Transfer</title>
+
+<style>
+body {
+  font-family: Arial;
+  background:#f4f6f8;
+  padding:20px;
+}
+
+.container{
+  max-width:520px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.notice{
+  background:#fff3cd;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:15px;
+  font-size:14px;
+}
+
+.box{
+  background:#f8f9fa;
+  padding:14px;
+  margin-bottom:15px;
+  border-radius:10px;
+}
+
+h3{
+  margin-bottom:8px;
+}
+
+button{
+  margin-top:5px;
+  padding:6px 12px;
+  border:none;
+  background:#007bff;
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#0056b3;
+}
+
+.small{
+  font-size:12px;
+  color:gray;
+}
+</style>
+
+<script>
+function copyText(text){
+  navigator.clipboard.writeText(text);
+  alert("Copied ✅");
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Donate via Bank Transfer</h2>
+
+<div class="notice">
+⚠️ For fast and secure donations, please use our official Donate button.
+Bank transfer is optional and may take longer to confirm.
+</div>
+
+<p class="small">
+Organization: Global Children Relief<br>
+Purpose: Emergency medical support for children
+</p>
+
+<!-- USA -->
+<div class="box">
+<h3>🇺🇸 USA (USD)</h3>
+
+<p><strong>Bank:</strong> Lead Bank</p>
+<p><strong>Account Name:</strong> Kenneth Chidera Odenyi</p>
+
+<p><strong>Account Number:</strong> 219236835537</p>
+<button onclick="copyText('219236835537')">Copy</button>
+
+<p><strong>Routing (ACH/Wire):</strong> 101019644</p>
+<button onclick="copyText('101019644')">Copy</button>
+
+<p class="small">
+Checking account • USD receiving account
+</p>
+</div>
+
+<!-- UK -->
+<div class="box">
+<h3>🇬🇧 UK (GBP)</h3>
+
+<p><strong>Bank:</strong> Clear Junction Limited</p>
+<p><strong>Account Name:</strong> Kenneth Chidera Odenyi</p>
+
+<p><strong>Account Number:</strong> 41903990</p>
+<button onclick="copyText('41903990')">Copy</button>
+
+<p><strong>Sort Code:</strong> 04-13-07</p>
+<button onclick="copyText('041307')">Copy</button>
+
+<p><strong>SWIFT:</strong> CLJUGB21XXX</p>
+<button onclick="copyText('CLJUGB21XXX')">Copy</button>
+</div>
+
+<!-- EURO -->
+<div class="box">
+<h3>🇪🇺 Europe (EUR)</h3>
+
+<p><strong>Bank:</strong> Clear Junction Limited</p>
+<p><strong>Account Name:</strong> Kenneth Chidera Odenyi</p>
+
+<p><strong>IBAN:</strong> GB60CLJU04130741903990</p>
+<button onclick="copyText('GB60CLJU04130741903990')">Copy</button>
+
+<p><strong>SWIFT:</strong> CLJUGB21XXX</p>
+<button onclick="copyText('CLJUGB21XXX')">Copy</button>
+</div>
+
+<p class="small">
+ℹ️ After sending, please contact us with proof for confirmation.
+</p>
+
+</div>
+
+</body>
+</html>
