@@ -1,400 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Child Support</title>
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta property="og:title" content="Help Save a Child’s Life Today 💔🚑">  
+<meta property="og:description" content="A child is fighting for life. Every second matters. Donate now and save a life.">  
+<meta property="og:image" content="img.jpg">  
+<meta property="og:url" content="PUT YOUR WEBSITE LINK HERE">  
+<title>Global Child Support</title>  
 
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#f5f6f7;
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+
+<style>  
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f6f7;
+}  
+  
+.top-card {  
+    max-width: 520px;
+    margin: 20px auto;
+    background: #fff;  
+    border-radius: 20px;
+    overflow: hidden;  
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);  
+}  
+  
+.image-box img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+}  
+
+.content {
+    padding: 20px;
+}  
+  
+h2 {
+    margin: 0 0 5px;
+}  
+
+.org {
+    color: #00a651;
+    font-weight: bold;
+    margin-bottom: 10px;
+}  
+  
+.desc {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}  
+  
+.circle-wrap {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}  
+
+.circle {  
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;  
+    background: conic-gradient(#00a651 12%, #eee 0%);  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;  
+}  
+  
+.progress {
+    height: 8px;
+    background: #eee;
+    border-radius: 10px;
+    margin: 10px 0;
+}  
+
+.fill {
+    height: 100%;
+    background: #00a651;
+    width: 12%;
+    border-radius: 10px;
+}  
+  
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}  
+
+.amount-grid button {  
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;  
+    background: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}  
+
+.amount-grid button:hover {
+    border-color: #00a651;
+    background: #f0fdf4;
 }
 
-/* MAIN CARD */
-.top-card{
-max-width:520px;
-margin:20px auto;
-background:#fff;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
+.amount-grid button.active {
+    background: #00a651;
+    color: #fff;
+}  
+  
+#customAmount {  
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;  
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    margin-top: 10px;
+    box-sizing: border-box;
+}  
+  
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}  
+
+.btn {  
+    flex: 1;
+    padding: 18px;
+    border: none;
+    border-radius: 40px;  
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}  
+
+.donate {
+    background: #16a34a;
+    color: #fff;
+}  
+
+.donate:hover {
+    background: #15803d;
 }
 
-.image-box img{
-width:100%;
-height:260px;
-object-fit:cover;
+.share {
+    background: #065f46;
+    color: #fff;
+}  
+
+.share:hover {
+    background: #047857;
+}
+  
+#bankSection {
+    display: none;
+    margin-top: 20px;
+}  
+  
+.bank-grid {  
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}  
+  
+.bank-card {  
+    background: #fff;  
+    padding: 20px;  
+    border-radius: 16px;  
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);  
+    font-size: 15px;  
+    line-height: 1.6;  
+}  
+  
+.copy-btn {  
+    margin-left: 10px;  
+    padding: 5px 10px;  
+    font-size: 12px;  
+    border: none;  
+    border-radius: 8px;  
+    background: #e5e7eb;  
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
-/* CONTENT */
-.content{padding:20px}
-
-h2{margin-bottom:5px}
-
-.org{
-color:#00a651;
-font-weight:bold;
-margin-bottom:10px;
+.copy-btn:hover {
+    background: #d1d5db;
 }
+  
+#popup {  
+    position: fixed;  
+    bottom: 20px;  
+    left: -300px;  
+    background: #111827;  
+    color: #fff;  
+    padding: 12px 16px;  
+    border-radius: 10px;  
+    font-size: 13px;  
+    transition: .5s;  
+    z-index: 9999;  
+}  
 
-.desc{
-color:#555;
-font-size:14px;
-line-height:1.5;
-margin-bottom:15px;
+#popup.show {
+    left: 20px;  
+}  
+  
+.share-bar {  
+    display: flex;
+    justify-content: space-around;  
+    padding: 15px;
+    border-top: 1px solid #eee;
+    margin-top: 15px;  
+}  
+
+.share-bar div {
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;  
+}  
+
+.share-bar span {
+    font-size: 22px;
+    display: block;
+    margin-bottom: 4px;
+}  
+  
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}  
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}  
+  
+.card {  
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;  
+    box-shadow: 0 5px 15px rgba(0,0,0,.05);  
+}  
+  
+#name, #comment {  
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;  
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}  
+  
+.footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #666;
+}  
+
+.footer strong {
+    display: block;
+    margin-top: 10px;
+    color: #000;
+}  
+  
+@media(max-width: 768px){  
+    .info-grid {
+        grid-template-columns: 1fr;
+    }  
+}  
+</style>  
+</head>  
+<body>  
+
+<div class="top-card">  
+    <div class="image-box"><img src="img.jpg" alt="Campaign Image"></div>  
+    <div class="content">  
+        <h2>Help Save a Child’s Life Today 💔🚑</h2>  
+        <div class="org">Global Children Relief</div>  
+        <div class="desc">  
+            💔 A child is fighting for life and urgently needs help.<br><br>  
+            Every donation brings hope, healing, and a second chance.<br><br>  
+            🙏 Please support or share.  
+        </div>  
+        
+        <div class="circle-wrap">  
+            <div class="circle">12%</div>  
+            <div>  
+                <p>$240 raised of $2,000</p>  
+                <small>18 donors</small>  
+            </div>  
+        </div>  
+        
+        <div class="progress"><div class="fill"></div></div>  
+        
+        <div class="amount-grid">  
+            <button onclick="setAmount(event,5)">$5</button>  
+            <button onclick="setAmount(event,10)">$10</button>  
+            <button onclick="setAmount(event,20)">$20</button>  
+            <button onclick="setAmount(event,50)">$50</button>  
+            <button onclick="setAmount(event,100)">$100</button>  
+            <button onclick="setAmount(event,200)">$200</button>  
+            <button onclick="setAmount(event,500)">$500</button>  
+            <button onclick="setAmount(event,1000)">$1000</button>  
+            <button onclick="setAmount(event,2000)">$2000</button>  
+        </div>  
+        
+        <input id="customAmount" placeholder="$ Enter amount" onfocus="this.value = ''">  
+        
+        <div class="btn-row">  
+            <button class="btn donate" onclick="payNow()">💳 Donate</button>  
+            <button class="btn share" onclick="shareMore()">Share</button>  
+        </div>  
+        
+        <button class="btn" style="margin-top:10px;background:#111827;color:#fff;" onclick="toggleBank()">  
+            🏦 Bank Transfer (Manual)  
+        </button>  
+        
+        <div id="bankSection">  
+            <div style="background:#ecfdf5;padding:18px;border-radius:14px;margin-bottom:20px;font-size:15px;color:#065f46;">  
+                💙 Thank you for your kindness.<br>  
+                Please send proof after transfer:<br>  
+                📧 <b>globalchildrenrelief@gmail.com</b>  
+            </div>  
+            
+            <div class="bank-grid">  
+                <div class="bank-card">  
+                    <h3>🇺🇸 USA</h3>  
+                    Name: Kenneth Chidera Odenyi<br>  
+                    Account: 219236835537 <button class="copy-btn" onclick="copyText('219236835537')">Copy</button><br>  
+                    Routing: 101019644 <button class="copy-btn" onclick="copyText('101019644')">Copy</button>  
+                </div>  
+                <div class="bank-card">  
+                    <h3>🇬🇧 UK</h3>  
+                    Name: Kenneth Chidera Odenyi<br>  
+                    Account: 41903990 <button class="copy-btn" onclick="copyText('41903990')">Copy</button><br>  
+                    Sort: 041307 <button class="copy-btn" onclick="copyText('041307')">Copy</button><br>  
+                    SWIFT: CLJUGB21XXX  
+                </div>  
+                <div class="bank-card">  
+                    <h3>🇪🇺 EURO</h3>  
+                    Name: Kenneth Chidera Odenyi<br>  
+                    Bank: Clear Junction Limited<br>  
+                    Account: 41903990<br>  
+                    IBAN: GB60CLJU04130741903990 <button class="copy-btn" onclick="copyText('GB60CLJU04130741903990')">Copy</button><br>  
+                    SWIFT: CLJUGB21XXX  
+                </div>  
+            </div>  
+        </div>  
+        
+        <div class="share-bar">  
+            <div onclick="copyLink()"><span>🔗</span>Copy</div>  
+            <div onclick="shareFacebook()"><span>📘</span>Facebook</div>  
+            <div onclick="shareWhatsApp()"><span>💬</span>WhatsApp</div>  
+            <div onclick="shareSMS()"><span>📱</span>Text</div>  
+            <div onclick="shareMore()"><span>⋯</span>More</div>  
+        </div>  
+        
+    </div>  
+</div>  
+
+<div class="container">  
+    <div class="info-grid">  
+        <div class="card">  
+            <h3>Story Video</h3>  
+            <video controls width="100%">  
+                <source src="video.mp4" type="video/mp4">  
+            </video>  
+        </div>  
+        
+        <div class="card">  
+            <h3>Medical Reports</h3>  
+            <img src="support.jpg" alt="Medical Support" style="width:100%;">  
+        </div>  
+        
+        <div class="card">  
+            <h3>Live Comments</h3>  
+            <input id="name" placeholder="Your name">  
+            <textarea id="comment" placeholder="Leave a message..." rows="3"></textarea>  
+            <button class="btn" style="background:#00a651; color:#fff; padding:10px; margin-top:8px; font-size:16px; border-radius:8px;" onclick="postComment()">Post Comment</button>  
+            <div id="commentList" style="margin-top:15px; max-height:150px; overflow-y:auto;"></div>  
+        </div>  
+    </div>  
+</div>  
+
+<div class="footer">  
+    🙏 May God bless everyone who supports this cause<br>  
+    📧 globalchildrenrelief@gmail.com  
+    <strong>Global Child Support</strong>  
+</div>  
+
+<div id="popup"></div>  
+
+<script>  
+const link = "https://flutterwave.com/donate/ci3l7ae0qihq";  
+  
+/* original functions */  
+function setAmount(e, a) {  
+    document.querySelectorAll(".amount-grid button").forEach(b => b.classList.remove("active"));  
+    e.target.classList.add("active");  
+    document.getElementById("customAmount").value = "$"+a;  
+}  
+  
+function payNow() {
+    let amountStr = document.getElementById("customAmount").value || "$5";
+    let amount = parseFloat(amountStr.replace(/[^0-9.]/g, '')) || 5;
+
+    let publicKey = "FLWPUBK-68077a508f28acedb751c074d1d55435-X";
+
+    // FlutterwaveCheckout initialization
+    FlutterwaveCheckout({
+        public_key: publicKey,
+        tx_ref: "txref-" + Date.now(),
+        amount: amount,
+        currency: "USD",
+        country: "US",
+        payment_options: "card, banktransfer, ussd",
+        customer: {
+            email: "donor@example.com",
+            phone_number: "08000000000",
+            name: "Anonymous Donor"
+        },
+        callback: function(data) {
+            // Handle success response here
+            alert("Payment completed successfully! Reference: " + data.tx_ref);
+            console.log(data);
+        },
+        onclose: function() {
+            // Handle modal closure
+            console.log("Payment window closed.");
+        }
+    });
 }
+  
+function toggleBank() {  
+    let x = document.getElementById("bankSection");  
+    x.style.display = (x.style.display === "none") ? "block" : "none";  
+}  
+  
+function copyText(t) {  
+    navigator.clipboard.writeText(t);  
+    alert("Copied!");  
+}  
+  
+function copyLink() { navigator.clipboard.writeText(link); }  
+function shareWhatsApp() { window.open("https://wa.me/?text="+encodeURIComponent(link)); }  
+function shareFacebook() { window.open("https://www.facebook.com/sharer/sharer.php?u="+link); }  
+function shareSMS() { window.open("sms:?body="+link); }  
+function shareMore() { if(navigator.share) { navigator.share({title:"Donate",url:link}); } }  
+  
+function postComment() {  
+    let name = document.getElementById("name").value;  
+    let text = document.getElementById("comment").value;  
+    if(!name || !text) { alert("Fill all"); return; }  
+    document.getElementById("commentList").innerHTML += `<p><b>${name}</b>: ${text}</p>`;  
+    document.getElementById("name").value = '';
+    document.getElementById("comment").value = '';
+}  
+  
+/* 🔥 NEW UNLIMITED POPUP */  
+const firstNames = ["James","John","Robert","Michael","William","David","Daniel","Matthew","Anthony","Mark","Paul","Andrew","Joshua","Kevin","Brian","George","Edward","Ryan","Jacob","Gary"];  
+const lastNames = ["Smith","Johnson","Williams","Brown","Jones","Garcia","Miller","Davis","Rodriguez","Martinez","Wilson","Anderson","Taylor","Moore","Jackson"];  
+  
+const countries = [  
+    {flag:"🇺🇸",currency:"$"},  
+    {flag:"🇬🇧",currency:"£"},  
+    {flag:"🇪🇺",currency:"€"}  
+];  
+  
+const usedNames = new Set();  
+const amounts = [5,10,20,50,100];  
+const times = ["just now","1 min ago","2 min ago","5 min ago"];  
+  
+function getName() {  
+    let n;  
+    do{  
+        n = firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];  
+    }while(usedNames.has(n));  
+    usedNames.add(n);  
+    if(usedNames.size>500) { usedNames.clear(); }  
+    return n;  
+}  
+  
+function popup() {  
+    let c = countries[Math.floor(Math.random()*countries.length)];  
+    let msg = `${c.flag} ${getName()} donated ${c.currency}${amounts[Math.floor(Math.random()*amounts.length)]} • ${times[Math.floor(Math.random()*times.length)]}`;  
+  
+    let p = document.getElementById("popup");  
+    p.innerText = msg;  
+    p.classList.add("show");  
+  
+    setTimeout(() => p.classList.remove("show"),4000);  
+}  
+  
+setInterval(popup,7000);  
+</script>  
 
-/* PROGRESS */
-.circle-wrap{
-display:flex;
-align-items:center;
-gap:15px;
-}
-
-.circle{
-width:60px;
-height:60px;
-border-radius:50%;
-background:conic-gradient(#00a651 12%, #eee 0%);
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-}
-
-.progress{
-height:8px;
-background:#eee;
-border-radius:10px;
-margin:10px 0;
-}
-
-.fill{
-height:100%;
-background:#00a651;
-width:12%;
-border-radius:10px;
-}
-
-/* BUTTON GRID */
-.amount-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-top:10px;
-}
-
-.amount-grid button{
-padding:14px;
-border-radius:12px;
-border:1px solid #ddd;
-background:#fff;
-font-weight:bold;
-cursor:pointer;
-}
-
-.amount-grid button.active{
-background:#00a651;
-color:#fff;
-}
-
-/* INPUT */
-#customAmount{
-width:100%;
-padding:16px;
-font-size:18px;
-border-radius:12px;
-border:2px solid #ccc;
-margin-top:10px;
-}
-
-/* BIG BUTTONS */
-.btn-row{
-display:flex;
-gap:10px;
-margin-top:10px;
-}
-
-.btn{
-flex:1;
-padding:18px;
-border:none;
-border-radius:40px;
-font-weight:bold;
-cursor:pointer;
-font-size:18px;
-}
-
-.donate{
-background:#16a34a;
-color:#fff;
-}
-
-.share{
-background:#065f46;
-color:#fff;
-}
-
-/* SHARE BAR */
-.share-bar{
-display:flex;
-justify-content:space-around;
-padding:15px;
-border-top:1px solid #eee;
-margin-top:15px;
-}
-
-.share-bar div{
-text-align:center;
-font-size:12px;
-cursor:pointer;
-}
-
-.share-bar span{
-display:block;
-font-size:22px;
-}
-
-/* CONTAINER */
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
-
-.info-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.card{
-background:#fff;
-padding:20px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.05);
-}
-
-/* COMMENTS */
-#name,#comment{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid #ccc;
-}
-
-#comment{height:80px}
-
-#commentList p{
-background:#f1f1f1;
-padding:10px;
-border-radius:8px;
-margin-top:8px;
-}
-
-/* FOOTER */
-.footer{
-text-align:center;
-padding:20px;
-font-size:12px;
-color:#666;
-}
-
-.footer strong{
-display:block;
-margin-top:10px;
-font-size:14px;
-color:#000;
-}
-
-@media(max-width:768px){
-.info-grid{grid-template-columns:1fr}
-}
-</style>
-</head>
-
-<body>
-
-<div class="top-card">
-
-<div class="image-box">
-<img src="img.jpg">
-</div>
-
-<div class="content">
-
-<h2>Help Save a Child’s Life Today 💔 🚑</h2>
-<div class="org">Global Children Relief</div>
-
-<div class="desc">
-A child is fighting for life right now. Without urgent treatment, they may not survive. Every second matters. Every donation counts. Even $5 can help save a life today.
-</div>
-
-<div class="circle-wrap">
-<div class="circle">12%</div>
-<div>
-<p>$240 raised of $2,000</p>
-<small>18 donors</small>
-</div>
-</div>
-
-<div class="progress">
-<div class="fill"></div>
-</div>
-
-<div class="amount-grid">
-<button onclick="setAmount(event,5)">$5</button>
-<button onclick="setAmount(event,10)">$10</button>
-<button onclick="setAmount(event,20)">$20</button>
-<button onclick="setAmount(event,50)">$50</button>
-<button onclick="setAmount(event,100)">$100</button>
-<button onclick="setAmount(event,200)">$200</button>
-<button onclick="setAmount(event,500)">$500</button>
-<button onclick="setAmount(event,1000)">$1000</button>
-<button onclick="setAmount(event,2000)">$2000</button>
-</div>
-
-<input id="customAmount" placeholder="$ Enter amount">
-
-<div class="btn-row">
-<button class="btn donate" onclick="payNow()">Donate</button>
-<button class="btn share" onclick="shareAll()">Share</button>
-</div>
-
-<!-- SHARE BAR ALWAYS VISIBLE -->
-<div class="share-bar">
-<div onclick="copyLink()"><span>🔗</span>Copy</div>
-<div onclick="shareFacebook()"><span>📘</span>Facebook</div>
-<div onclick="shareWhatsApp()"><span>💬</span>WhatsApp</div>
-<div onclick="shareSMS()"><span>📱</span>Text</div>
-<div onclick="shareMore()"><span>⋯</span>More</div>
-</div>
-
-</div>
-</div>
-
-<div class="container">
-<div class="info-grid">
-
-<div class="card">
-<h3>Story Video</h3>
-<video controls width="100%">
-<source src="video.mp4">
-</video>
-</div>
-
-<div class="card">
-<h3>Live Comments</h3>
-<input id="name" placeholder="Your name">
-<textarea id="comment" placeholder="Write your comment..."></textarea>
-<button onclick="postComment()">Post Comment</button>
-<div id="commentList"></div>
-</div>
-
-<div class="card">
-<h3>Medical Reports</h3>
-<img src="support.jpg" style="width:100%;border-radius:10px;">
-</div>
-
-</div>
-</div>
-
-<div class="footer">
-🙏 May God bless everyone who supports this cause with health and prosperity.<br><br>
-🚑 Every donation is handled safely and goes directly to helping children.<br><br>
-📧 globalchildrenrelief@gmail.com
-<strong>Global Child Support</strong>
-© 2026 Global Child Support
-</div>
-
-<script>
-const link="https://flutterwave.com/donate/ci3l7ae0qihq";
-
-function setAmount(e,a){
-document.querySelectorAll(".amount-grid button").forEach(b=>b.classList.remove("active"));
-e.target.classList.add("active");
-document.getElementById("customAmount").value="$"+a;
-}
-
-function payNow(){
-let amount=document.getElementById("customAmount").value.replace("$","")||5;
-window.location.href=link+"?amount="+amount;
-}
-
-/* SHARE */
-function copyLink(){
-navigator.clipboard.writeText(link);
-alert("Link copied!");
-}
-
-function shareWhatsApp(){
-window.open("https://wa.me/?text="+encodeURIComponent(link));
-}
-
-function shareFacebook(){
-window.open("https://www.facebook.com/sharer/sharer.php?u="+link);
-}
-
-function shareSMS(){
-window.open("sms:?body="+link);
-}
-
-function shareMore(){
-if(navigator.share){
-navigator.share({title:"Donate",url:link});
-}else{
-alert("Sharing not supported on this device");
-}
-}
-</script>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyXXXXXXXX",
-  authDomain: "globalchildrenrelief-9746a.firebaseapp.com",
-  projectId: "globalchildrenrelief-9746a",
-  storageBucket: "globalchildrenrelief-9746a.appspot.com",
-  messagingSenderId: "218937278830",
-  appId: "1:218937278830:web:578a126f4500a8d72d817f"
-};
-
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-
-window.postComment=async function(){
-let name=document.getElementById("name").value;
-let text=document.getElementById("comment").value;
-
-if(!name || !text){
-alert("Fill all fields");
-return;
-}
-
-await addDoc(collection(db,"comments"),{
-name,text,time:Date.now()
-});
-
-document.getElementById("name").value="";
-document.getElementById("comment").value="";
-};
-
-const q=query(collection(db,"comments"),orderBy("time","desc"));
-
-onSnapshot(q,(snapshot)=>{
-let list=document.getElementById("commentList");
-list.innerHTML="";
-snapshot.forEach(doc=>{
-let d=doc.data();
-list.innerHTML+=`<p><b>${d.name}</b>: ${d.text}</p>`;
-});
-});
-</script>
-
-</body>
+</body>  
 </html>
