@@ -1,88 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Admin Panel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Global Children Relief</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<style>
-body{font-family:Arial;background:#f4f6f8;padding:20px;}
-.container{max-width:700px;margin:auto;background:#fff;padding:20px;border-radius:15px;}
-input,textarea{width:100%;padding:10px;margin-top:10px;border-radius:8px;border:1px solid #ccc;}
-button{padding:12px;background:#00a651;color:#fff;border:none;border-radius:8px;margin-top:10px;width:100%;}
-</style>
+        // ADD YOUR EXACT FIREBASE CONFIGURATION HERE
+        const firebaseConfig = {
+            apiKey: "AIzaSyXXXXXXXX",
+            authDomain: "globalchildrenrelief-9746a.firebaseapp.com",
+            projectId: "globalchildrenrelief-9746a",
+            storageBucket: "globalchildrenrelief-9746a.appspot.com",
+            messagingSenderId: "218937278830",
+            appId: "1:218937278830:web:578a126f4500a8d72d817f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.docRef = doc(db, "site", "main");
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.05);
+        }
+        h2 {
+            margin-top: 0;
+            color: #111;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #4b5563;
+            margin-bottom: 6px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #16a34a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #15803d;
+        }
+        #loginSection {
+            display: block;
+        }
+        #adminContent {
+            display: none;
+        }
+        .status {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+        .status-success {
+            background: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+        }
+        .status-error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="container">
+        <div id="loginSection">
+            <h2>Admin Security Login</h2>
+            <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Enter your admin passcode to proceed to the editor.</p>
+            <div class="form-group">
+                <label>Passcode</label>
+                <input type="password" id="adminPassword" placeholder="Enter password (default is: 1234)">
+            </div>
+            <button onclick="checkPassword()">Log In</button>
+            <p id="loginError" style="color: #dc2626; font-size: 12px; display: none; margin-top: 8px;">Incorrect password. Try again.</p>
+        </div>
 
-<div class="container">
-<h2>Admin Panel</h2>
+        <div id="adminContent">
+            <h2>Campaign Editor</h2>
+            <div class="form-group">
+                <label>Campaign Title</label>
+                <input type="text" id="editTitle">
+            </div>
+            <div class="form-group">
+                <label>Campaign Story</label>
+                <textarea id="editStory" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Goal Amount ($)</label>
+                <input type="number" id="editGoal">
+            </div>
+            <div class="form-group">
+                <label>Min Donation ($)</label>
+                <input type="number" id="editMin">
+            </div>
+            <div class="form-group">
+                <label>Max Donation ($)</label>
+                <input type="number" id="editMax">
+            </div>
+            <div class="form-group">
+                <label>Main Image URL</label>
+                <input type="url" id="editImage">
+            </div>
+            <div class="form-group">
+                <label>Medical Report Image URL</label>
+                <input type="url" id="editReport">
+            </div>
+            <div class="form-group">
+                <label>Share Message</label>
+                <input type="text" id="editShare">
+            </div>
 
-<input id="title" placeholder="Title">
-<textarea id="story" placeholder="Story"></textarea>
-<input id="image" placeholder="img.jpg">
-<input id="video" placeholder="video.mp4">
-<input id="report" placeholder="report1.jpg">
-<input id="goal" placeholder="2000">
-<input id="min" placeholder="5">
-<input id="max" placeholder="2000">
-<textarea id="share" placeholder="Share message"></textarea>
+            <button onclick="saveChanges()">Save Changes</button>
+            <div id="statusMsg" class="status"></div>
+            
+            <button style="background: #111827; margin-top: 12px;" onclick="logout()">Log Out</button>
+        </div>
+    </div>
 
-<button onclick="save()">Save</button>
+    <script type="module">
+        import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-</div>
+        // Security check
+        window.checkPassword = function() {
+            const pass = document.getElementById("adminPassword").value;
+            // You can change "1234" to any other passcode you prefer:
+            if (pass === "1234") {
+                document.getElementById("loginSection").style.display = "none";
+                document.getElementById("adminContent").style.display = "block";
+                loadCurrentData();
+            } else {
+                document.getElementById("loginError").style.display = "block";
+            }
+        };
 
-<!-- FIREBASE -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-apiKey: "AIzaSyBsS48tgOniIUsJSQT8qyDgZSXPT-Jivrk",
-  authDomain: "globalchildrenrelief-9746a.firebaseapp.com",
-  projectId: "globalchildrenrelief-9746a",
-  storageBucket: "globalchildrenrelief-9746a.firebasestorage.app",
-  messagingSenderId: "218937278830",
-  appId: "1:218937278830:web:578a126f4500a8d72d817f"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+        window.logout = function() {
+            document.getElementById("loginSection").style.display = "block";
+            document.getElementById("adminContent").style.display = "none";
+            document.getElementById("adminPassword").value = "";
+            document.getElementById("loginError").style.display = "none";
+        };
 
-/* LOAD DATA */
-async function load(){
-let ref = doc(db,"site","data");
-let snap = await getDoc(ref);
+        async function loadCurrentData() {
+            try {
+                const docSnap = await getDoc(window.docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById("editTitle").value = data.title || "";
+                    document.getElementById("editStory").value = data.story || "";
+                    document.getElementById("editGoal").value = data.goal || "";
+                    document.getElementById("editMin").value = data.min || "";
+                    document.getElementById("editMax").value = data.max || "";
+                    document.getElementById("editImage").value = data.image || "";
+                    document.getElementById("editReport").value = data.report || "";
+                    document.getElementById("editShare").value = data.share || "";
+                }
+            } catch (error) {
+                console.error("Error loading data:", error);
+            }
+        }
 
-if(snap.exists()){
-let d = snap.data();
-document.getElementById("title").value = d.title || "";
-document.getElementById("story").value = d.story || "";
-document.getElementById("image").value = d.image || "";
-document.getElementById("video").value = d.video || "";
-document.getElementById("report").value = d.report || "";
-document.getElementById("goal").value = d.goal || "";
-document.getElementById("min").value = d.min || "";
-document.getElementById("max").value = d.max || "";
-document.getElementById("share").value = d.share || "";
-}
-}
+        window.saveChanges = async function() {
+            const status = document.getElementById("statusMsg");
+            status.style.display = "none";
 
-/* SAVE DATA */
-window.save = async function(){
-await setDoc(doc(db,"site","data"),{
-title: title.value,
-story: story.value,
-image: image.value,
-video: video.value,
-report: report.value,
-goal: goal.value,
-min: min.value,
-max: max.value,
-share: share.value
-});
+            try {
+                await setDoc(window.docRef, {
+                    title: document.getElementById("editTitle").value,
+                    story: document.getElementById("editStory").value,
+                    goal: document.getElementById("editGoal").value,
+                    min: document.getElementById("editMin").value,
+                    max: document.getElementById("editMax").value,
+                    image: document.getElementById("editImage").value,
+                    report: document.getElementById("editReport").value,
+                    share: document.getElementById("editShare").value
+                }, { merge: true });
 
-alert("Saved globally ✅");
-}
-
-load();
-</script>
-
+                status.innerText = "Content updated successfully!";
+                status.className = "status status-success";
+                status.style.display = "block";
+            } catch (error) {
+                console.error("Error updating:", error);
+                status.innerText = "Error saving. Please check your network/console.";
+                status.className = "status status-error";
+                status.style.display = "block";
+            }
+        };
+    </script>
 </body>
 </html>
