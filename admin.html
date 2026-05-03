@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,10 +105,6 @@
 
         <div id="adminContent">
             <h2>Campaign Editor</h2>
-            
-            <div style="font-size: 12px; color: #065f46; background: #ecfdf5; padding: 10px; border-radius: 8px; margin-bottom: 16px;">
-                💡 <strong>How to update pictures and reports:</strong> Select an image directly from your phone/computer, or paste a link from an image hosting site into the URL fields below.
-            </div>
 
             <div class="form-group">
                 <label>Campaign Title</label>
@@ -129,7 +126,7 @@
                 <label>Max Donation ($)</label>
                 <input type="number" id="editMax">
             </div>
-            
+
             <div class="form-group">
                 <label>Main Campaign Image</label>
                 <input type="url" id="editImage" placeholder="Or paste image URL">
@@ -152,7 +149,7 @@
 
             <button onclick="saveChanges()">Save Changes</button>
             <div id="statusMsg" class="status"></div>
-            
+
             <button style="background: #111827; margin-top: 12px;" onclick="logout()">Log Out</button>
         </div>
     </div>
@@ -215,16 +212,15 @@
 
         window.saveChanges = async function() {
             const status = document.getElementById("statusMsg");
-            status.style.display = "none";
+            status.style.display = "block";
             status.innerText = "Saving changes...";
             status.className = "status status-success";
-            status.style.display = "block";
 
             try {
                 let mainImageUrl = document.getElementById("editImage").value;
                 let reportImageUrl = document.getElementById("editReport").value;
 
-                // Handle Main Image file upload if selected
+                // Handle Main Image file upload
                 const imageFile = document.getElementById("editImageFile").files[0];
                 if (imageFile) {
                     status.innerText = "Uploading Main Image...";
@@ -233,7 +229,7 @@
                     mainImageUrl = await getDownloadURL(imageRef);
                 }
 
-                // Handle Medical Report file upload if selected
+                // Handle Medical Report file upload
                 const reportFile = document.getElementById("editReportFile").files[0];
                 if (reportFile) {
                     status.innerText = "Uploading Medical Report...";
@@ -242,6 +238,7 @@
                     reportImageUrl = await getDownloadURL(reportRef);
                 }
 
+                status.innerText = "Saving data to database...";
                 await setDoc(docRef, {
                     title: document.getElementById("editTitle").value,
                     story: document.getElementById("editStory").value,
@@ -258,7 +255,7 @@
                 loadCurrentData();
             } catch (error) {
                 console.error("Error updating:", error);
-                status.innerText = "Error saving. Make sure your Firebase storage rules are public.";
+                status.innerText = "Error saving: " + error.message;
                 status.className = "status status-error";
             }
         };
