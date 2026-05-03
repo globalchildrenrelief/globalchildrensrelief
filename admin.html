@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,7 +163,7 @@
             apiKey: "AIzaSyBsS48tgOniIUsJSQT8qyDgZSXPT-Jivrk",
             authDomain: "globalchildrenrelief-9746a.firebaseapp.com",
             projectId: "globalchildrenrelief-9746a",
-            storageBucket: "globalchildrenrelief-9746a.firebasestorage.app",
+            storageBucket: "globalchildrenrelief-9746a.appspot.com",
             messagingSenderId: "218937278830",
             appId: "1:218937278830:web:578a126f4500a8d72d817f"
         };
@@ -215,6 +216,11 @@
             status.innerText = "Saving changes...";
             status.className = "status status-success";
 
+            // Set a 10-second timeout mechanism to ensure it doesn't hang indefinitely
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error("Connection to Firebase timed out. Check internet connectivity or rules.")), 10000)
+            );
+
             try {
                 let mainImageUrl = document.getElementById("editImage").value;
                 let reportImageUrl = document.getElementById("editReport").value;
@@ -223,31 +229,38 @@
                 const imageFile = document.getElementById("editImageFile").files[0];
                 if (imageFile) {
                     status.innerText = "Uploading Main Image...";
-                    const imageRef = ref(storage, 'campaigns/main_image.jpg');
-                    await uploadBytes(imageRef, imageFile);
-                    mainImageUrl = await getDownloadURL(imageRef);
+                    const ext = imageFile.name.split('.').pop();
+                    const imageRef = ref(storage, 'campaigns/main_' + Date.now() + '.' + ext);
+                    
+                    await Promise.race([uploadBytes(imageRef, imageFile), timeoutPromise]);
+                    mainImageUrl = await Promise.race([getDownloadURL(imageRef), timeoutPromise]);
                 }
 
                 // Handle Medical Report file upload
                 const reportFile = document.getElementById("editReportFile").files[0];
                 if (reportFile) {
                     status.innerText = "Uploading Medical Report...";
-                    const reportRef = ref(storage, 'campaigns/report_image.jpg');
-                    await uploadBytes(reportRef, reportFile);
-                    reportImageUrl = await getDownloadURL(reportRef);
+                    const ext = reportFile.name.split('.').pop();
+                    const reportRef = ref(storage, 'campaigns/report_' + Date.now() + '.' + ext);
+                    
+                    await Promise.race([uploadBytes(reportRef, reportFile), timeoutPromise]);
+                    reportImageUrl = await Promise.race([getDownloadURL(reportRef), timeoutPromise]);
                 }
 
                 status.innerText = "Saving data to database...";
-                await setDoc(docRef, {
-                    title: document.getElementById("editTitle").value,
-                    story: document.getElementById("editStory").value,
-                    goal: document.getElementById("editGoal").value,
-                    min: document.getElementById("editMin").value,
-                    max: document.getElementById("editMax").value,
-                    image: mainImageUrl,
-                    report: reportImageUrl,
-                    share: document.getElementById("editShare").value
-                }, { merge: true });
+                await Promise.race([
+                    setDoc(docRef, {
+                        title: document.getElementById("editTitle").value,
+                        story: document.getElementById("editStory").value,
+                        goal: document.getElementById("editGoal").value,
+                        min: document.getElementById("editMin").value,
+                        max: document.getElementById("editMax").value,
+                        image: mainImageUrl,
+                        report: reportImageUrl,
+                        share: document.getElementById("editShare").value
+                    }, { merge: true }),
+                    timeoutPromise
+                ]);
 
                 status.innerText = "Content and images updated successfully!";
                 status.className = "status status-success";
