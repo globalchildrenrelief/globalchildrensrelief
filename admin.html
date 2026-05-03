@@ -4,26 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Global Children Relief</title>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        // ADD YOUR EXACT FIREBASE CONFIGURATION HERE
-        const firebaseConfig = {
-            apiKey: "AIzaSyXXXXXXXX",
-            authDomain: "globalchildrenrelief-9746a.firebaseapp.com",
-            projectId: "globalchildrenrelief-9746a",
-            storageBucket: "globalchildrenrelief-9746a.appspot.com",
-            messagingSenderId: "218937278830",
-            appId: "1:218937278830:web:578a126f4500a8d72d817f"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        window.db = db;
-        window.docRef = doc(db, "site", "main");
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,6 +40,13 @@
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 14px;
+        }
+        .file-input-box {
+            margin-top: 6px;
+            padding: 8px;
+            background: #f9fafb;
+            border: 1px dashed #d1d5db;
+            border-radius: 8px;
         }
         button {
             width: 100%;
@@ -117,6 +104,11 @@
 
         <div id="adminContent">
             <h2>Campaign Editor</h2>
+            
+            <div style="font-size: 12px; color: #065f46; background: #ecfdf5; padding: 10px; border-radius: 8px; margin-bottom: 16px;">
+                💡 <strong>How to update pictures and reports:</strong> Select an image directly from your phone/computer, or paste a link from an image hosting site into the URL fields below.
+            </div>
+
             <div class="form-group">
                 <label>Campaign Title</label>
                 <input type="text" id="editTitle">
@@ -137,14 +129,22 @@
                 <label>Max Donation ($)</label>
                 <input type="number" id="editMax">
             </div>
+            
             <div class="form-group">
-                <label>Main Image URL</label>
-                <input type="url" id="editImage">
+                <label>Main Campaign Image</label>
+                <input type="url" id="editImage" placeholder="Or paste image URL">
+                <div class="file-input-box">
+                    <input type="file" id="editImageFile" accept="image/*">
+                </div>
             </div>
             <div class="form-group">
-                <label>Medical Report Image URL</label>
-                <input type="url" id="editReport">
+                <label>Medical Report Image</label>
+                <input type="url" id="editReport" placeholder="Or paste report image URL">
+                <div class="file-input-box">
+                    <input type="file" id="editReportFile" accept="image/*">
+                </div>
             </div>
+
             <div class="form-group">
                 <label>Share Message</label>
                 <input type="text" id="editShare">
@@ -158,12 +158,26 @@
     </div>
 
     <script type="module">
-        import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-        // Security check
+        const firebaseConfig = {
+            apiKey: "AIzaSyBsS48tgOniIUsJSQT8qyDgZSXPT-Jivrk",
+            authDomain: "globalchildrenrelief-9746a.firebaseapp.com",
+            projectId: "globalchildrenrelief-9746a",
+            storageBucket: "globalchildrenrelief-9746a.firebasestorage.app",
+            messagingSenderId: "218937278830",
+            appId: "1:218937278830:web:578a126f4500a8d72d817f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+        const docRef = doc(db, "site", "main");
+
         window.checkPassword = function() {
             const pass = document.getElementById("adminPassword").value;
-            // You can change "1234" to any other passcode you prefer:
             if (pass === "1234") {
                 document.getElementById("loginSection").style.display = "none";
                 document.getElementById("adminContent").style.display = "block";
@@ -182,7 +196,7 @@
 
         async function loadCurrentData() {
             try {
-                const docSnap = await getDoc(window.docRef);
+                const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     document.getElementById("editTitle").value = data.title || "";
@@ -202,27 +216,50 @@
         window.saveChanges = async function() {
             const status = document.getElementById("statusMsg");
             status.style.display = "none";
+            status.innerText = "Saving changes...";
+            status.className = "status status-success";
+            status.style.display = "block";
 
             try {
-                await setDoc(window.docRef, {
+                let mainImageUrl = document.getElementById("editImage").value;
+                let reportImageUrl = document.getElementById("editReport").value;
+
+                // Handle Main Image file upload if selected
+                const imageFile = document.getElementById("editImageFile").files[0];
+                if (imageFile) {
+                    status.innerText = "Uploading Main Image...";
+                    const imageRef = ref(storage, 'campaigns/main_image.jpg');
+                    await uploadBytes(imageRef, imageFile);
+                    mainImageUrl = await getDownloadURL(imageRef);
+                }
+
+                // Handle Medical Report file upload if selected
+                const reportFile = document.getElementById("editReportFile").files[0];
+                if (reportFile) {
+                    status.innerText = "Uploading Medical Report...";
+                    const reportRef = ref(storage, 'campaigns/report_image.jpg');
+                    await uploadBytes(reportRef, reportFile);
+                    reportImageUrl = await getDownloadURL(reportRef);
+                }
+
+                await setDoc(docRef, {
                     title: document.getElementById("editTitle").value,
                     story: document.getElementById("editStory").value,
                     goal: document.getElementById("editGoal").value,
                     min: document.getElementById("editMin").value,
                     max: document.getElementById("editMax").value,
-                    image: document.getElementById("editImage").value,
-                    report: document.getElementById("editReport").value,
+                    image: mainImageUrl,
+                    report: reportImageUrl,
                     share: document.getElementById("editShare").value
                 }, { merge: true });
 
-                status.innerText = "Content updated successfully!";
+                status.innerText = "Content and images updated successfully!";
                 status.className = "status status-success";
-                status.style.display = "block";
+                loadCurrentData();
             } catch (error) {
                 console.error("Error updating:", error);
-                status.innerText = "Error saving. Please check your network/console.";
+                status.innerText = "Error saving. Make sure your Firebase storage rules are public.";
                 status.className = "status status-error";
-                status.style.display = "block";
             }
         };
     </script>
