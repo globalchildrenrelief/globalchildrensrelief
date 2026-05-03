@@ -1,276 +1,167 @@
+What about this
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Global Children Relief</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,.05);
-        }
-        h2 {
-            margin-top: 0;
-            color: #111;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: bold;
-            color: #4b5563;
-            margin-bottom: 6px;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        .file-input-box {
-            margin-top: 6px;
-            padding: 8px;
-            background: #f9fafb;
-            border: 1px dashed #d1d5db;
-            border-radius: 8px;
-        }
-        button {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: #16a34a;
-            color: #fff;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background: #15803d;
-        }
-        #loginSection {
-            display: block;
-        }
-        #adminContent {
-            display: none;
-        }
-        .status {
-            margin-top: 12px;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 13px;
-            display: none;
-        }
-        .status-success {
-            background: #ecfdf5;
-            color: #059669;
-            border: 1px solid #a7f3d0;
-        }
-        .status-error {
-            background: #fef2f2;
-            color: #dc2626;
-            border: 1px solid #fca5a5;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div id="loginSection">
-            <h2>Admin Security Login</h2>
-            <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Enter your admin passcode to proceed to the editor.</p>
-            <div class="form-group">
-                <label>Passcode</label>
-                <input type="password" id="adminPassword" placeholder="Enter password (default is: 1234)">
-            </div>
-            <button onclick="checkPassword()">Log In</button>
-            <p id="loginError" style="color: #dc2626; font-size: 12px; display: none; margin-top: 8px;">Incorrect password. Try again.</p>
-        </div>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Admin Panel - Love for Children</title>  <style>  
+body {  
+  font-family: Arial;  
+  background: #f3f4f6;  
+  padding: 20px;  
+}  
+.container {  
+  max-width: 600px;  
+  margin: auto;  
+  background: #fff;  
+  padding: 20px;  
+  border-radius: 12px;  
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);  
+}  
+input, textarea {  
+  width: 100%;  
+  padding: 10px;  
+  margin: 6px 0;  
+  box-sizing: border-box;  
+  border: 1px solid #d1d5db;  
+  border-radius: 6px;  
+}  
+button {  
+  width: 100%;  
+  padding: 12px;  
+  background: green;  
+  color: white;  
+  border: none;  
+  border-radius: 6px;  
+  margin-top: 10px;  
+  font-weight: bold;  
+  cursor: pointer;  
+}  
+button:hover {  
+  background: #166534;  
+}  
+.file-box {  
+  margin: -2px 0 10px 0;  
+  padding: 6px 10px;  
+  background: #f9fafb;  
+  border: 1px dashed #d1d5db;  
+  border-radius: 6px;  
+  font-size: 13px;  
+  color: #4b5563;  
+}  
+.file-box input[type="file"] {  
+  margin: 2px 0 0 0;  
+  padding: 2px;  
+  border: none;  
+  background: transparent;  
+  width: auto;  
+}  
+</style>  </head>  <body>  <div class="container">  
+  <h2 id="loginTitle">Admin Login</h2>  
+  <input type="password" id="adminPassword" placeholder="Enter password">  
+  <button id="loginBtn" onclick="login()">Login</button>    <div id="adminPanel" style="display:none;">  
+    <h3>Edit Campaign</h3>  <input id="title" placeholder="Title">  
+<textarea id="story" placeholder="Story"></textarea>  
+<input id="goal" placeholder="Goal Amount">  
+<input id="min" placeholder="Min Donation">  
+<input id="max" placeholder="Max Donation">  
 
-        <div id="adminContent">
-            <h2>Campaign Editor</h2>
+<label for="image">Main Campaign Image</label>  
+<input id="image" placeholder="Paste Image Link">  
+<div class="file-box">  
+  Or upload an image file from your device: <br>  
+  <input type="file" id="imageFile" accept="image/*" onchange="previewFile('image', 'imageFile')">  
+</div>  
 
-            <div class="form-group">
-                <label>Campaign Title</label>
-                <input type="text" id="editTitle">
-            </div>
-            <div class="form-group">
-                <label>Campaign Story</label>
-                <textarea id="editStory" rows="5"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Goal Amount ($)</label>
-                <input type="number" id="editGoal">
-            </div>
-            <div class="form-group">
-                <label>Min Donation ($)</label>
-                <input type="number" id="editMin">
-            </div>
-            <div class="form-group">
-                <label>Max Donation ($)</label>
-                <input type="number" id="editMax">
-            </div>
+<label for="report">Medical Report Image</label>  
+<input id="report" placeholder="Paste Report Image Link">  
+<div class="file-box">  
+  Or upload a report image file from your device: <br>  
+  <input type="file" id="reportFile" accept="image/*" onchange="previewFile('report', 'reportFile')">  
+</div>  
 
-            <div class="form-group">
-                <label>Main Campaign Image</label>
-                <input type="url" id="editImage" placeholder="Or paste image URL">
-                <div class="file-input-box">
-                    <input type="file" id="editImageFile" accept="image/*">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Medical Report Image</label>
-                <input type="url" id="editReport" placeholder="Or paste report image URL">
-                <div class="file-input-box">
-                    <input type="file" id="editReportFile" accept="image/*">
-                </div>
-            </div>
+<input id="share" placeholder="Share Message">  
 
-            <div class="form-group">
-                <label>Share Message</label>
-                <input type="text" id="editShare">
-            </div>
+<button onclick="save()">Save Changes</button>
 
-            <button onclick="saveChanges()">Save Changes</button>
-            <div id="statusMsg" class="status"></div>
-
-            <button style="background: #111827; margin-top: 12px;" onclick="logout()">Log Out</button>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBsS48tgOniIUsJSQT8qyDgZSXPT-Jivrk",
-            authDomain: "globalchildrenrelief-9746a.firebaseapp.com",
-            projectId: "globalchildrenrelief-9746a",
-            storageBucket: "globalchildrenrelief-9746a.appspot.com",
-            messagingSenderId: "218937278830",
-            appId: "1:218937278830:web:578a126f4500a8d72d817f"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-        const docRef = doc(db, "site", "main");
-
-        window.checkPassword = function() {
-            const pass = document.getElementById("adminPassword").value;
-            if (pass === "1234") {
-                document.getElementById("loginSection").style.display = "none";
-                document.getElementById("adminContent").style.display = "block";
-                loadCurrentData();
-            } else {
-                document.getElementById("loginError").style.display = "block";
-            }
-        };
-
-        window.logout = function() {
-            document.getElementById("loginSection").style.display = "block";
-            document.getElementById("adminContent").style.display = "none";
-            document.getElementById("adminPassword").value = "";
-            document.getElementById("loginError").style.display = "none";
-        };
-
-        async function loadCurrentData() {
-            try {
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    document.getElementById("editTitle").value = data.title || "";
-                    document.getElementById("editStory").value = data.story || "";
-                    document.getElementById("editGoal").value = data.goal || "";
-                    document.getElementById("editMin").value = data.min || "";
-                    document.getElementById("editMax").value = data.max || "";
-                    document.getElementById("editImage").value = data.image || "";
-                    document.getElementById("editReport").value = data.report || "";
-                    document.getElementById("editShare").value = data.share || "";
-                }
-            } catch (error) {
-                console.error("Error loading data:", error);
-            }
-        }
-
-        window.saveChanges = async function() {
-            const status = document.getElementById("statusMsg");
-            status.style.display = "block";
-            status.innerText = "Saving changes...";
-            status.className = "status status-success";
-
-            // Set a 10-second timeout mechanism to ensure it doesn't hang indefinitely
-            const timeoutPromise = new Promise((_, reject) =>
-                setTimeout(() => reject(new Error("Connection to Firebase timed out. Check internet connectivity or rules.")), 10000)
-            );
-
-            try {
-                let mainImageUrl = document.getElementById("editImage").value;
-                let reportImageUrl = document.getElementById("editReport").value;
-
-                // Handle Main Image file upload
-                const imageFile = document.getElementById("editImageFile").files[0];
-                if (imageFile) {
-                    status.innerText = "Uploading Main Image...";
-                    const ext = imageFile.name.split('.').pop();
-                    const imageRef = ref(storage, 'campaigns/main_' + Date.now() + '.' + ext);
-                    
-                    await Promise.race([uploadBytes(imageRef, imageFile), timeoutPromise]);
-                    mainImageUrl = await Promise.race([getDownloadURL(imageRef), timeoutPromise]);
-                }
-
-                // Handle Medical Report file upload
-                const reportFile = document.getElementById("editReportFile").files[0];
-                if (reportFile) {
-                    status.innerText = "Uploading Medical Report...";
-                    const ext = reportFile.name.split('.').pop();
-                    const reportRef = ref(storage, 'campaigns/report_' + Date.now() + '.' + ext);
-                    
-                    await Promise.race([uploadBytes(reportRef, reportFile), timeoutPromise]);
-                    reportImageUrl = await Promise.race([getDownloadURL(reportRef), timeoutPromise]);
-                }
-
-                status.innerText = "Saving data to database...";
-                await Promise.race([
-                    setDoc(docRef, {
-                        title: document.getElementById("editTitle").value,
-                        story: document.getElementById("editStory").value,
-                        goal: document.getElementById("editGoal").value,
-                        min: document.getElementById("editMin").value,
-                        max: document.getElementById("editMax").value,
-                        image: mainImageUrl,
-                        report: reportImageUrl,
-                        share: document.getElementById("editShare").value
-                    }, { merge: true }),
-                    timeoutPromise
-                ]);
-
-                status.innerText = "Content and images updated successfully!";
-                status.className = "status status-success";
-                loadCurrentData();
-            } catch (error) {
-                console.error("Error updating:", error);
-                status.innerText = "Error saving: " + error.message;
-                status.className = "status status-error";
-            }
-        };
-    </script>
-</body>
+  </div>  
+</div>  <script type="module">  
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";  
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";  
+  
+const firebaseConfig = {  
+  apiKey: "AIzaSyBl1FuQgnwHQgCe5AAYcDWijjkApaYIoL0",  
+  authDomain: "love-for-children.firebaseapp.com",  
+  projectId: "love-for-children",  
+  storageBucket: "love-for-children.appspot.com",  
+  messagingSenderId: "402025339791",  
+  appId: "1:402025339791:web:9e6633293e705ab859c9fa"  
+};  
+  
+const app = initializeApp(firebaseConfig);  
+const db = getFirestore(app);  
+const docRef = doc(db, "site", "main");  
+  
+window.login = function() {  
+  if (document.getElementById("adminPassword").value === "1234") {  
+    document.getElementById("adminPanel").style.display = "block";  
+    document.getElementById("loginTitle").style.display = "none";  
+    document.getElementById("adminPassword").style.display = "none";  
+    document.getElementById("loginBtn").style.display = "none";  
+    loadData();  
+  } else {  
+    alert("Wrong password");  
+  }  
+};  
+  
+async function loadData() {  
+  try {  
+    const docSnap = await getDoc(docRef);  
+    if (docSnap.exists()) {  
+      const d = docSnap.data();  
+      document.getElementById("title").value = d.title || "";  
+      document.getElementById("story").value = d.story || "";  
+      document.getElementById("goal").value = d.goal || "";  
+      document.getElementById("min").value = d.min || "";  
+      document.getElementById("max").value = d.max || "";  
+      document.getElementById("image").value = d.image || "";  
+      document.getElementById("report").value = d.report || "";  
+      document.getElementById("share").value = d.share || "";  
+    }  
+  } catch (e) {  
+    alert("Error loading data");  
+  }  
+}  
+  
+// Convert chosen file to link string  
+window.previewFile = function(targetId, fileInputId) {  
+  const file = document.getElementById(fileInputId).files[0];  
+  if (file) {  
+    const reader = new FileReader();  
+    reader.onload = function(e) {  
+      document.getElementById(targetId).value = e.target.result;  
+    };  
+    reader.readAsDataURL(file);  
+  }  
+};  
+  
+window.save = async function() {  
+  try {  
+    await setDoc(docRef, {  
+      title: document.getElementById("title").value,  
+      story: document.getElementById("story").value,  
+      goal: document.getElementById("goal").value,  
+      min: document.getElementById("min").value,  
+      max: document.getElementById("max").value,  
+      image: document.getElementById("image").value,  
+      report: document.getElementById("report").value,  
+      share: document.getElementById("share").value  
+    }, { merge: true });  
+  
+    alert("Saved successfully!");  
+  } catch (e) {  
+    alert("Error: " + e.message);  
+  }  
+};  
+</script>  </body>  
 </html>
