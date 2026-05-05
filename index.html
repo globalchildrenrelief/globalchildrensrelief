@@ -409,8 +409,8 @@ h2 {
     <div style="margin-top: 20px;">      
         <div class="input-label">Select your currency</div>      
         <select id="country" onchange="changeCurrency()" style="width:100%;padding:12px;margin-bottom:15px;border-radius:10px;border:1px solid #d1d5db;box-sizing:border-box;">          
-            <option value="US" data-symbol="$">🇺🇸 United States</option>      
-            <option value="GB" data-symbol="£" selected>🇬🇧 United Kingdom</option>      
+            <option value="US" data-symbol="$" selected>🇺🇸 United States</option>      
+            <option value="GB" data-symbol="£">🇬🇧 United Kingdom</option>      
             <option value="CA" data-symbol="$">🇨🇦 Canada</option>      
             <option value="AU" data-symbol="$">🇦🇺 Australia</option>      
             <option value="DE" data-symbol="€">🇩🇪 Germany</option>      
@@ -493,16 +493,8 @@ h2 {
             </div>          
             <div class="bank-grid">          
                 <div class="bank-card">          
-                    <h3>🇺🇸 USA</h3>          
+                    <h3>🇺🇸 USA Account Details</h3>          
                     Name: Kenneth Chidera Odenyi<br>                    Account: 219236835537 <button class="copy-btn" onclick="copyText('219236835537')">Copy</button><br>                    Routing: 101019644 <button class="copy-btn" onclick="copyText('101019644')">Copy</button>          
-                </div>          
-                <div class="bank-card">          
-                    <h3>🇬🇧 UK</h3>          
-                    Name: Kenneth Chidera Odenyi<br>                    Account: 41903990 <button class="copy-btn" onclick="copyText('41903990')">Copy</button><br>                    Sort: 041307 <button class="copy-btn" onclick="copyText('041307')">Copy</button><br>                    SWIFT: CLJUGB21XXX          
-                </div>          
-                <div class="bank-card">          
-                    <h3>🇪🇺 EURO</h3>          
-                    Name: Kenneth Chidera Odenyi<br>                    Bank: Clear Junction Limited<br>                    Account: 41903990<br>                    IBAN: GB60CLJU04130741903990 <button class="copy-btn" onclick="copyText('GB60CLJU04130741903990')">Copy</button><br>                    SWIFT: CLJUGB21XXX          
                 </div>          
             </div>      
         </div>    
@@ -533,16 +525,16 @@ h2 {
             <img src="support.jpg" alt="Medical Support" style="width:100%; border-radius: 8px;">          
             <p style="color:#4b5563; font-size: 13px; margin-top:8px;">      
                 View latest medical reports and doctor's updates.      
-            </p>      
+            </p>          
             <a href="#" style="color:#00a651; font-weight: bold; text-decoration: none;">View reports</a>      
         </div>        
         
         <div class="card">          
             <h3>💬 Recent Donations</h3>          
-            <div style="font-size:13px; color:#4b5563; margin-top:8px;">      
-                <p><b>Sarah Johnson</b> 25 <span style="font-size:11px; color:#999; float:right;">2h ago</span></p>      
-                <p><b>Ahmed Mohammed</b> 50 <span style="font-size:11px; color:#999; float:right;">5h ago</span></p>      
-                <p><b>Laura Brown</b> 10 <span style="font-size:11px; color:#999; float:right;">1d ago</span></p>      
+            <div id="donationList" style="font-size:13px; color:#4b5563; margin-top:8px;">      
+                <p><b>Sarah Johnson</b> $25 <span style="font-size:11px; color:#999; float:right;">2h ago</span></p>      
+                <p><b>Ahmed Mohammed</b> $50 <span style="font-size:11px; color:#999; float:right;">5h ago</span></p>      
+                <p><b>Laura Brown</b> $10 <span style="font-size:11px; color:#999; float:right;">1d ago</span></p>      
             </div>      
             <a href="#" style="color:#00a651; font-weight: bold; text-decoration: none; display:block; margin-top: 15px;">See all donations</a>      
         </div>  
@@ -602,160 +594,10 @@ h2 {
 </div>  
 
 <script>
-const link = "https://flutterwave.com/donate/ci3l7ae0qihq";
+let selectedAmount = 0;
+let currencySymbol = "$";
+let currencyCode = "USD";
 
-// 🌍 GLOBAL
-let currencySymbol = "£";
-let currencyCode = "GBP";
-
-// ✅ CHANGE CURRENCY
-function changeCurrency() {
-    let select = document.getElementById("country");
-    if (!select) return;
-    
-    let option = select.options[select.selectedIndex];
-    currencySymbol = option.getAttribute("data-symbol") || "$";
-
-    const currencyMap = {
-        US:"USD", GB:"GBP", CA:"CAD", AU:"AUD",
-        DE:"EUR", FR:"EUR", IT:"EUR", ES:"EUR", NL:"EUR", BE:"EUR",
-        SE:"SEK", NO:"NOK", DK:"DKK", CH:"CHF",
-        JP:"JPY", CN:"CNY", IN:"INR", BR:"BRL",
-        MX:"MXN", ZA:"ZAR", KE:"KES", GH:"GHS",
-        AE:"AED", SA:"SAR", TR:"TRY", RU:"RUB",
-        KR:"KRW", SG:"SGD", NZ:"NZD", AR:"ARS",
-        CL:"CLP", CO:"COP", PK:"PKR", BD:"BDT", EG:"EGP"
-    };
-
-    currencyCode = currencyMap[option.value] || "USD";
-
-    let input = document.getElementById("customAmount");
-    if (input) {
-        input.value = ""; 
-        input.placeholder = currencySymbol + " Enter amount";
-    }
-
-    document.querySelectorAll(".amount-btn").forEach(btn => {
-        let val = btn.getAttribute("data-value");
-        if (val && val !== "Other") {
-            btn.innerText = currencySymbol + val;
-        } else {
-            btn.innerText = "Other";
-        }
-    });
-}
-
-// ✅ SET AMOUNT
-function setAmount(e, a) {
-    document.querySelectorAll(".amount-btn").forEach(b => b.classList.remove("active"));
-    e.target.classList.add("active");
-
-    let input = document.getElementById("customAmount");
-    if (a !== 'Other') {
-        input.value = currencySymbol + a;
-    } else {
-        input.value = "";
-    }
-}
-
-// ✅ PAYMENT FIX
-function payNow() {
-    let amountStr = document.getElementById("customAmount").value || currencySymbol + "5";
-    let amount = parseFloat(amountStr.replace(/[^0-9.]/g, '')) || 5;
-
-    let publicKey = "FLWPUBK-68077a508f28acedb751c074d1d55435-X";
-
-    FlutterwaveCheckout({
-        public_key: publicKey,
-        tx_ref: "txref-" + Date.now(),
-        amount: amount,
-        currency: currencyCode,
-        payment_options: "card, banktransfer, ussd",
-
-        customer: {
-            email: document.getElementById("email").value || "donor@example.com",
-            phone_number: "08000000000",
-            name: document.getElementById("donorName").value || "Anonymous Donor"
-        },
-
-        callback: function(data) {
-            alert("Payment successful! Ref: " + data.tx_ref);
-        },
-
-        onclose: function() {
-            console.log("Payment closed");
-        }
-    });
-}
-
-// KEEP YOUR OTHER FUNCTIONS
-function toggleBank() {
-    let x = document.getElementById("bankSection");
-    x.style.display = (x.style.display === "none") ? "block" : "none";
-}
-
-function copyText(t) {
-    navigator.clipboard.writeText(t);
-    alert("Copied!");
-}
-
-function copyLink() {
-    navigator.clipboard.writeText(link);
-    alert("Link copied!");
-}
-
-function shareWhatsApp() {
-    window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(link));
-}
-
-function shareFacebook() {
-    window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link));
-}
-
-function shareTwitter() {
-    window.open("https://twitter.com/intent/tweet?url=" + encodeURIComponent(link));
-}
-
-function shareEmail() {
-    window.open("mailto:?subject=Help&body=" + encodeURIComponent(link));
-}
-
-function shareTelegram() {
-    window.open("https://t.me/share/url?url=" + encodeURIComponent(link));
-}
-
-function shareNextdoor() {
-    window.open("https://nextdoor.com/share/?url=" + encodeURIComponent(link));
-}
-
-function openShareModal() {
-    document.getElementById("shareModal").style.display = "flex";
-}
-
-function closeShareModal() {
-    document.getElementById("shareModal").style.display = "none";
-}
-
-function postComment() {
-    let name = document.getElementById("commentName").value;
-    let text = document.getElementById("comment").value;
-
-    if (!name || !text) {
-        alert("Fill all fields");
-        return;
-    }
-
-    let p = document.createElement("p");
-    p.innerHTML = "<b>" + name + "</b>: " + text;
-
-    document.getElementById("commentList").appendChild(p);
-
-    document.getElementById("commentName").value = "";
-    document.getElementById("comment").value = "";
-}
-
-// Forces an initialization to match the UK default immediately
-changeCurrency();
-</script>
-</body>
-</html>
+// Added totals from the updateDonation snippet
+let totalRaised = 240;
+le
