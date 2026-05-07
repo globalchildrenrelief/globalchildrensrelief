@@ -1,0 +1,1033 @@
+<!DOCTYPE html>    
+<html lang="en">        
+<head>            
+<meta charset="UTF-8">            
+<meta name="viewport" content="width=device-width, initial-scale=1.0">            
+<meta property="og:title" content="Help Save a Child’s Life Today 💔🚑">            
+<meta property="og:description" content="A child is fighting for life. Every second matters. Donate now and save a life.">            
+<meta property="og:image" content="support.jpg">            
+<meta property="og:url" content="PUT YOUR WEBSITE LINK HERE">            
+<title>Global Child Support</title>          
+<script src="https://checkout.flutterwave.com/v3.js"></script>        
+<style>            
+body {          
+    margin: 0;          
+    font-family: Arial, sans-serif;          
+    background: #f5f6f7;          
+}        
+.top-card {    
+    max-width: 900px;    
+    margin: 20px auto;    
+    background: #fff;    
+    border-radius: 20px;    
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);    
+    padding: 24px;    
+}  
+.main-layout {  
+    display: grid;  
+    grid-template-columns: 1.2fr 0.8fr;  
+    gap: 30px;  
+}  
+.image-box {
+    background-color: #e5e7eb;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-size: 14px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+h2 {
+    margin: 0 0 8px;
+    font-size: 26px;
+}
+
+.org {
+    color: #00a651;
+    font-weight: bold;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.verified-badge {
+    background-color: #ecfdf5;
+    color: #059669;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.desc {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.circle-wrap {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: conic-gradient(#00a651 12%, #eee 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.progress {
+    height: 8px;
+    background: #eee;
+    border-radius: 10px;
+    margin: 14px 0 24px;
+}
+
+.fill {
+    height: 100%;
+    background: #00a651;
+    width: 12%;
+    border-radius: 10px;
+}
+
+.input-label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #4b5563;
+    margin-bottom: 4px;
+}
+
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.amount-grid button {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.amount-grid button:hover {
+    border-color: #00a651;
+    background: #f0fdf4;
+}
+
+.amount-grid button.active {
+    background: #00a651;
+    color: #fff;
+}
+
+#customAmount {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    margin-bottom: 14px;
+    box-sizing: border-box;
+}
+
+.info-grid-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+#donorName, #email, #commentName {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    box-sizing: border-box;
+}
+
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.donate {
+    background: #16a34a;
+    color: #fff;
+}
+
+.donate:hover {
+    background: #15803d;
+}
+
+.share {
+    background: #065f46;
+    color: #fff;
+}
+
+.share:hover {
+    background: #047857;
+}
+
+#bankSection {
+    display: none;
+    margin-top: 20px;
+}
+
+.bank-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.bank-card {
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.copy-btn {
+    margin-left: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    border: none;
+    border-radius: 6px;
+    background: #e5e7eb;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.copy-btn:hover {
+    background: #d1d5db;
+}
+
+#popup {
+    position: fixed;
+    bottom: 20px;
+    left: -300px;
+    background: #111827;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    transition: .5s;
+    z-index: 9999;
+}
+
+#popup.show {
+    left: 20px;
+}
+
+.share-bar {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0 0;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.share-bar div {
+    text-align: center;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.share-bar span {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.05);
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 12px;
+    color: #666;
+}
+
+.footer strong {
+    display: block;
+    margin-top: 10px;
+    color: #000;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-card {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 360px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.modal-card h3 {
+    margin-top: 0;
+    color: #111;
+}
+
+.modal-card p {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.modal-btn:hover {
+    opacity: 0.9;
+}
+
+@media(max-width: 768px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    .image-box {
+        height: 240px;
+        margin-bottom: 15px;
+    }
+}
+</style>
+</head>          
+<body>      
+<div class="top-card">          
+    <div class="main-layout">      
+        <div>      
+            <h2>Help Save a Child’s Life Today 💔🚑</h2>          
+            <div class="org">      
+                Global Children Relief <span style="color:#00a651;">✔</span>      
+                <span class="verified-badge">Verified Nonprofit</span>      
+            </div>          
+            <div class="desc">          
+                A child is fighting for life and urgently needs help.<br><br>          
+                Every donation brings hope, healing, and a second chance.<br><br>          
+                🙏 Please support or share.          
+            </div>      
+            <div class="circle-wrap">          
+                <div class="circle">12%</div>          
+                <div>          
+                    <p><strong>$240</strong> raised of $2,000 goal</p>          
+                    <small>18 donors</small>          
+                </div>          
+            </div>        
+            <div class="progress"><div class="fill"></div></div>          
+        </div>      
+        <div>      
+            <div class="image-box">        
+                <img src="support.jpg" alt="Campaign Image">        
+            </div>        
+        </div>  
+    </div>    
+    
+    <div style="margin-top: 20px;">      
+        <div class="input-label">Select your currency</div>      
+        <select id="country" onchange="changeCurrency()" style="width:100%;padding:12px;margin-bottom:15px;border-radius:10px;border:1px solid #d1d5db;box-sizing:border-box;">          
+            <option value="US" data-symbol="$" selected>🇺🇸 United States</option>      
+            <option value="GB" data-symbol="£">🇬🇧 United Kingdom</option>      
+            <option value="CA" data-symbol="$">🇨🇦 Canada</option>      
+            <option value="AU" data-symbol="$">🇦🇺 Australia</option>      
+            <option value="DE" data-symbol="€">🇩🇪 Germany</option>      
+            <option value="FR" data-symbol="€">🇫🇷 France</option>      
+            <option value="IT" data-symbol="€">🇮🇹 Italy</option>      
+            <option value="ES" data-symbol="€">🇪🇸 Spain</option>      
+            <option value="NL" data-symbol="€">🇳🇱 Netherlands</option>      
+            <option value="BE" data-symbol="€">🇧🇪 Belgium</option>      
+            <option value="SE" data-symbol="kr">🇸🇪 Sweden</option>      
+            <option value="NO" data-symbol="kr">🇳🇴 Norway</option>      
+            <option value="DK" data-symbol="kr">🇩🇰 Denmark</option>      
+            <option value="CH" data-symbol="CHF">🇨🇭 Switzerland</option>      
+            <option value="JP" data-symbol="¥">🇯🇵 Japan</option>      
+            <option value="CN" data-symbol="¥">🇨🇳 China</option>      
+            <option value="IN" data-symbol="₹">🇮🇳 India</option>      
+            <option value="BR" data-symbol="R$">🇧🇷 Brazil</option>      
+            <option value="MX" data-symbol="$">🇲🇽 Mexico</option>      
+            <option value="ZA" data-symbol="R">🇿🇦 South Africa</option>      
+            <option value="KE" data-symbol="KSh">🇰🇪 Kenya</option>      
+            <option value="GH" data-symbol="₵">🇬🇭 Ghana</option>      
+            <option value="AE" data-symbol="د.إ">🇦🇪 UAE</option>      
+            <option value="SA" data-symbol="﷼">🇸🇦 Saudi Arabia</option>      
+            <option value="TR" data-symbol="₺">🇹🇷 Turkey</option>      
+            <option value="RU" data-symbol="₽">🇷🇺 Russia</option>      
+            <option value="KR" data-symbol="₩">🇰🇷 South Korea</option>      
+            <option value="SG" data-symbol="$">🇸🇬 Singapore</option>      
+            <option value="NZ" data-symbol="$">🇳🇿 New Zealand</option>      
+            <option value="AR" data-symbol="$">🇦🇷 Argentina</option>      
+            <option value="CL" data-symbol="$">🇨🇱 Chile</option>      
+            <option value="CO" data-symbol="$">🇨🇴 Colombia</option>      
+            <option value="PK" data-symbol="₨">🇵🇰 Pakistan</option>      
+            <option value="BD" data-symbol="৳">🇧🇩 Bangladesh</option>      
+            <option value="EG" data-symbol="£">🇪🇬 Egypt</option>      
+        </select>    
+        
+        <div class="input-label">Enter amount</div>      
+        <input id="customAmount" placeholder="$ Enter amount" onfocus="this.value = ''">          
+        
+        <div class="amount-grid">          
+            <button class="amount-btn" data-value="5" onclick="setAmount(event,5)">$5</button>          
+            <button class="amount-btn" data-value="10" onclick="setAmount(event,10)">$10</button>          
+            <button class="amount-btn" data-value="20" onclick="setAmount(event,20)">$20</button>          
+            <button class="amount-btn" data-value="50" onclick="setAmount(event,50)">$50</button>          
+            <button class="amount-btn" data-value="100" onclick="setAmount(event,100)">$100</button>          
+            <button class="amount-btn" data-value="200" onclick="setAmount(event,200)">$200</button>          
+            <button class="amount-btn" data-value="500" onclick="setAmount(event,500)">$500</button>          
+            <button class="amount-btn" data-value="1000" onclick="setAmount(event,1000)">$1000</button>          
+            <button class="amount-btn" data-value="2000" onclick="setAmount(event,2000)">$2000</button>          
+            <button class="amount-btn" data-value="Other" onclick="setAmount(event,'Other')">Other</button>      
+        </div>          
+        
+        <div class="info-grid-inputs">      
+            <input id="donorName" placeholder="Your name">      
+            <input id="email" type="email" placeholder="Your email">      
+        </div>      
+        
+        <div style="font-size: 12px; color: #4b5563; margin-top: 5px; margin-bottom: 15px;">      
+            🔒 Your information is secure and will never be shared.      
+        </div>      
+        
+        <div style="font-size: 13px; color: #065f46; margin: 15px 0 10px; text-align: center; line-height: 1.4; background: #ecfdf5; padding: 12px; border-radius: 14px; border: 1px solid #a7f3d0;">          
+            💳 <strong>Donate Online</strong> – Tap the Donate button for secure and instant payments.<br>      
+            🏦 <strong>Bank Transfer (Manual)</strong> – Transfer directly using our bank details.        
+        </div>          
+        
+        <div class="btn-row">          
+            <button class="btn donate" onclick="payNow()">💳 Donate Now </button>          
+            <button class="btn share" onclick="openShareModal()">Share </button>          
+        </div>          
+        
+        <button class="btn" style="margin-top:12px;background:#111827;color:#fff;" onclick="toggleBank()">          
+            🏦 Bank Transfer (Manual)          
+        </button>          
+        
+<div id="bankSection">
+
+<div style="background:#ecfdf5;padding:18px;border-radius:14px;margin-bottom:20px;font-size:15px;color:#065f46;line-height:1.7;">
+💙 Thank you for your kindness.<br>
+Please send proof after transfer.<br>
+📧 <b>globalchildrenrelief@gmail.com</b>
+</div>
+
+<div class="bank-grid">
+
+<div class="bank-card">
+<h3>🇺🇸 United States (USD)</h3>
+
+<p>
+<strong>Account Holder:</strong>
+Kenneth Chidera Odenyi
+<button class="copy-btn"
+onclick="copyText('Kenneth Chidera Odenyi')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Account Number:</strong>
+219236835537
+<button class="copy-btn"
+onclick="copyText('219236835537')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Account Type:</strong>
+Checking
+<button class="copy-btn"
+onclick="copyText('Checking')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>ACH Routing:</strong>
+101019644
+<button class="copy-btn"
+onclick="copyText('101019644')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Wire Routing:</strong>
+101019644
+<button class="copy-btn"
+onclick="copyText('101019644')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Bank Name:</strong>
+Lead Bank
+<button class="copy-btn"
+onclick="copyText('Lead Bank')">
+Copy
+</button>
+</p>
+
+</div>
+
+<div class="bank-card">
+<h3>🇬🇧 United Kingdom (GBP)</h3>
+
+<p>
+<strong>Account Holder:</strong>
+Kenneth Chidera Odenyi
+<button class="copy-btn"
+onclick="copyText('Kenneth Chidera Odenyi')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Account Number:</strong>
+41903990
+<button class="copy-btn"
+onclick="copyText('41903990')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Sort Code:</strong>
+041307
+<button class="copy-btn"
+onclick="copyText('041307')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Swift Code:</strong>
+CLJUGB21XXX
+<button class="copy-btn"
+onclick="copyText('CLJUGB21XXX')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Bank Name:</strong>
+Clear Junction Limited
+<button class="copy-btn"
+onclick="copyText('Clear Junction Limited')">
+Copy
+</button>
+</p>
+
+</div>
+
+<div class="bank-card">
+<h3>🇪🇺 Europe (EUR)</h3>
+
+<p>
+<strong>Account Holder:</strong>
+Kenneth Chidera Odenyi
+<button class="copy-btn"
+onclick="copyText('Kenneth Chidera Odenyi')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Account Number:</strong>
+41903990
+<button class="copy-btn"
+onclick="copyText('41903990')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>IBAN:</strong>
+GB60CLJU04130741903990
+<button class="copy-btn"
+onclick="copyText('GB60CLJU04130741903990')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Swift Code:</strong>
+CLJUGB21XXX
+<button class="copy-btn"
+onclick="copyText('CLJUGB21XXX')">
+Copy
+</button>
+</p>
+
+<p>
+<strong>Bank Name:</strong>
+Clear Junction Limited
+<button class="copy-btn"
+onclick="copyText('Clear Junction Limited')">
+Copy
+</button>
+</p>
+
+</div>
+
+</div>
+
+</div>
+<div class="share-bar">
+            <div onclick="copyLink()"><span>🔗</span>Copy Link</div>          
+            <div onclick="shareFacebook()"><span>📘</span>Facebook</div>          
+            <div onclick="shareWhatsApp()"><span>💬</span>WhatsApp</div>          
+            <div onclick="shareTwitter()"><span>✖️</span>Twitter</div>          
+            <div onclick="shareEmail()"><span>✉️</span>Email</div>          
+            <div onclick="openShareModal()"><span>⋯</span>More</div>          
+        </div>  
+    </div>  
+</div>      
+
+<div class="container">          
+    <div class="info-grid">          
+        <div class="card">          
+            <h3>📖 Our Story</h3>          
+            <p style="color:#4b5563; font-size: 14px; line-height: 1.6;">      
+                This child is battling a critical illness and needs urgent medical treatment. Your support can save a life and give a child a second chance at a healthy future.      
+            </p>          
+            <a href="#" style="color:#00a651; font-weight: bold; text-decoration: none;">Read more</a>      
+        </div>  
+        
+        <div class="card">          
+            <h3>📄 Medical Updates</h3>          
+            <img src="support.jpg" alt="Medical Support" style="width:100%; border-radius: 8px;">          
+            <p style="color:#4b5563; font-size: 13px; margin-top:8px;">      
+                View latest medical reports and doctor's updates.      
+            </p>          
+            <a href="#" style="color:#00a651; font-weight: bold; text-decoration: none;">View reports</a>      
+        </div>        
+        
+        <div class="card">          
+            <h3>💬 Recent Donations</h3>          
+            <div id="donationList" style="font-size:13px; color:#4b5563; margin-top:8px;">      
+                <p><b>Sarah Johnson</b> $25 <span style="font-size:11px; color:#999; float:right;">2h ago</span></p>      
+                <p><b>Ahmed Mohammed</b> $50 <span style="font-size:11px; color:#999; float:right;">5h ago</span></p>      
+                <p><b>Laura Brown</b> $10 <span style="font-size:11px; color:#999; float:right;">1d ago</span></p>      
+            </div>      
+            <a href="#" style="color:#00a651; font-weight: bold; text-decoration: none; display:block; margin-top: 15px;">See all donations</a>      
+        </div>  
+    </div>    
+    
+    <div class="card" style="margin-top: 20px;">          
+        <h3>Leave a Comment</h3>          
+        <input id="commentName" placeholder="Your name">          
+        <textarea id="comment" placeholder="Leave a message..." rows="3" style="margin-top:10px; width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #d1d5db; box-sizing: border-box;"></textarea>          
+        <button class="btn" style="background:#00a651; color:#fff; padding:12px; margin-top:12px; font-size:15px; border-radius:8px;" onclick="postComment()">Post Comment</button>          
+        <div id="commentList" style="margin-top:15px; max-height:150px; overflow-y:auto;"></div>          
+    </div>  
+</div>      
+
+<div class="footer">          
+    🙏 May God bless everyone who supports this cause<br>    📧 globalchildrenrelief@gmail.com          
+    <strong>Global Child Support</strong>          
+</div>      
+
+<div id="popup"></div>      
+<div id="shareModal" class="modal-overlay" onclick="closeShareModal()">
+
+<div class="modal-card" onclick="event.stopPropagation()">
+
+<h3>Share Campaign</h3>
+
+<p>Choose an option to share with your friends and family.</p>
+
+<button class="modal-btn" style="background: #25d366;" onclick="shareWhatsApp()">
+💬 WhatsApp
+</button>
+
+<button class="modal-btn" style="background: #1877f2;" onclick="shareFacebook()">
+📘 Facebook
+</button>
+
+<button class="modal-btn" style="background: #1da1f2;" onclick="shareTwitter()">
+✖️ Twitter
+</button>
+
+<button class="modal-btn" style="background: #ea4335;" onclick="shareEmail()">
+✉️ Email
+</button>
+
+<button class="modal-btn" style="background: #374151;" onclick="shareSMS()">
+📱 SMS / Text
+</button>
+
+<button class="modal-btn" style="background: #065f46;" onclick="copyLink()">
+🔗 Copy Link
+</button>
+
+<button class="modal-btn" style="background: #10b981;" onclick="shareMore()">
+📱 More Options
+</button>
+
+<button class="modal-btn"
+style="background:#f3f4f6;color:#111;border:1px solid #ddd;"
+onclick="closeShareModal()">
+Cancel
+</button>
+
+</div>
+</div>
+
+<script>
+
+const shareLink = "https://flutterwave.com/donate/ci3l7ae0qihq";
+
+let currencySymbol = "$";
+let currencyCode = "USD";
+
+function changeCurrency() {
+
+let select = document.getElementById("country");
+
+let option = select.options[select.selectedIndex];
+
+currencySymbol = option.getAttribute("data-symbol");
+
+const currencyMap = {
+US:"USD",
+GB:"GBP",
+CA:"CAD",
+AU:"AUD",
+DE:"EUR",
+FR:"EUR",
+IT:"EUR",
+ES:"EUR",
+NL:"EUR",
+BE:"EUR",
+SE:"SEK",
+NO:"NOK",
+DK:"DKK",
+CH:"CHF",
+JP:"JPY",
+CN:"CNY",
+IN:"INR",
+BR:"BRL",
+MX:"MXN",
+ZA:"ZAR",
+KE:"KES",
+GH:"GHS",
+AE:"AED",
+SA:"SAR",
+TR:"TRY",
+RU:"RUB",
+KR:"KRW",
+SG:"SGD",
+NZ:"NZD",
+AR:"ARS",
+CL:"CLP",
+CO:"COP",
+PK:"PKR",
+BD:"BDT",
+EG:"EGP"
+};
+
+currencyCode = currencyMap[select.value] || "USD";
+
+document.getElementById("customAmount").placeholder =
+currencySymbol + " Enter amount";
+
+document.querySelectorAll(".amount-btn").forEach(btn => {
+
+let val = btn.getAttribute("data-value");
+
+if(val !== "Other") {
+btn.innerText = currencySymbol + val;
+}
+
+});
+
+}
+
+function setAmount(e, amount) {
+
+document.querySelectorAll(".amount-btn")
+.forEach(btn => btn.classList.remove("active"));
+
+e.target.classList.add("active");
+
+if(amount === "Other") {
+
+document.getElementById("customAmount").value = "";
+
+} else {
+
+document.getElementById("customAmount").value =
+currencySymbol + amount;
+
+}
+
+}
+
+function payNow() {
+
+let amountStr =
+document.getElementById("customAmount").value;
+
+let amount =
+parseFloat(amountStr.replace(/[^0-9.]/g,'')) || 5;
+
+FlutterwaveCheckout({
+
+public_key:
+"FLWPUBK_TEST-d9ac1eb4dc3bfa9e7c43733c039e9223-X",
+
+tx_ref: "txref-" + Date.now(),
+
+amount: amount,
+
+currency: currencyCode,
+
+customer: {
+
+email:
+document.getElementById("email").value
+|| "donor@example.com",
+
+name:
+document.getElementById("donorName").value
+|| "Anonymous Donor"
+
+},
+
+callback: function(data) {
+
+alert("Payment Successful!");
+
+},
+
+customizations: {
+
+title: "Global Child Support",
+
+description: "Donation Payment",
+
+logo: "support.jpg"
+
+}
+
+});
+
+}
+
+function toggleBank() {
+
+let bank = document.getElementById("bankSection");
+
+bank.style.display =
+(bank.style.display === "block")
+? "none"
+: "block";
+
+}
+
+function copyText(text) {
+
+navigator.clipboard.writeText(text);
+
+alert("Copied!");
+
+}
+
+function copyLink() {
+
+navigator.clipboard.writeText(shareLink);
+
+alert("Link copied!");
+
+}
+
+function shareWhatsApp() {
+
+window.open(
+"https://wa.me/?text=" +
+encodeURIComponent(shareLink)
+);
+
+}
+
+function shareFacebook() {
+
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u="
++ encodeURIComponent(shareLink)
+);
+
+}
+
+function shareTwitter() {
+
+window.open(
+"https://twitter.com/intent/tweet?url="
++ encodeURIComponent(shareLink)
+);
+
+}
+
+function shareEmail() {
+
+window.location.href =
+"mailto:?subject=Donate&body=" + shareLink;
+
+}
+
+function shareSMS() {
+
+window.location.href =
+"sms:?body=" + shareLink;
+
+}
+
+function shareMore() {
+
+if(navigator.share) {
+
+navigator.share({
+title: "Global Child Support",
+url: shareLink
+});
+
+} else {
+
+copyLink();
+
+}
+
+}
+
+function openShareModal() {
+
+document.getElementById("shareModal").style.display = "flex";
+
+}
+
+function closeShareModal() {
+
+document.getElementById("shareModal").style.display = "none";
+
+}
+
+function postComment() {
+
+let name =
+document.getElementById("commentName").value;
+
+let comment =
+document.getElementById("comment").value;
+
+if(!name || !comment) {
+
+alert("Please fill everything");
+
+return;
+
+}
+
+let commentBox =
+document.getElementById("commentList");
+
+commentBox.innerHTML +=
+"<p><b>" + name + "</b>: " + comment + "</p>";
+
+document.getElementById("commentName").value = "";
+
+document.getElementById("comment").value = "";
+
+}
+
+changeCurrency();
+
+</script>
+
+</body>
+</html>       
+        
