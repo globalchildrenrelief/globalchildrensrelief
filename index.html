@@ -474,12 +474,46 @@ h2 {
         <div style="font-size: 13px; color: #065f46; margin: 15px 0 10px; text-align: center; line-height: 1.4; background: #ecfdf5; padding: 12px; border-radius: 14px; border: 1px solid #a7f3d0;">          
             💳 <strong>Donate Online</strong> – Tap the Donate button for secure and instant payments.<br>      
             🏦 <strong>Bank Transfer (Manual)</strong> – Transfer directly using our bank details.        
-        </div>          
-        
-        <div class="btn-row">          
-            <button class="btn donate" onclick="payNow()">💳 Donate Now </button>          
-            <button class="btn share" onclick="openShareModal()">Share </button>          
-        </div>          
+        <div class="btn-row" style="display:flex;flex-direction:column;gap:12px;">
+
+<button class="btn donate"
+onclick="payNow()">
+
+💳 Donate Now
+
+</button>
+
+<a href="https://www.paypal.me/LindaLippincott"
+target="_blank"
+style="text-decoration:none;">
+
+<button
+style="
+width:100%;
+padding:15px;
+background:#0070ba;
+color:white;
+border:none;
+border-radius:12px;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+">
+
+💙 Donate with PayPal
+
+</button>
+
+</a>
+
+<button class="btn share"
+onclick="openShareModal()">
+
+Share
+
+</button>
+
+</div>         
         
         <button class="btn" style="margin-top:12px;background:#111827;color:#fff;" onclick="toggleBank()">          
             🏦 Bank Transfer (Manual)          
