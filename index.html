@@ -468,22 +468,58 @@ h2 {
         </div>      
         
         <div style="font-size: 12px; color: #4b5563; margin-top: 5px; margin-bottom: 15px;">      
-            🔒 Your information is secure and will never be shared.      
+                
         </div>      
         
         <div style="font-size: 13px; color: #065f46; margin: 15px 0 10px; text-align: center; line-height: 1.4; background: #ecfdf5; padding: 12px; border-radius: 14px; border: 1px solid #a7f3d0;">          
-            💳 <strong>Donate Online</strong> – Tap the Donate button for secure and instant payments.<br>      
-            🏦 <strong>Bank Transfer (Manual)</strong> – Transfer directly using our bank details.        
+💳 Donate by Card or PayPal<br><br>
+🏦 Donate by Bank Transfer (Manual)
+</div>
         <div class="btn-row" style="display:flex;flex-direction:column;gap:12px;">
 
 <button class="btn donate"
-onclick="payNow()">
+onclick="payNow()"
+style="
+width:100%;
+padding:18px;
+background:#16a34a;
+color:white;
+border:none;
+border-radius:18px;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:10px;
+">
 
-💳 Donate Now
+<div style="
+display:flex;
+align-items:center;
+gap:10px;
+">
+
+💳 Donate with Card
+
+</div>
+
+<div style="
+display:flex;
+gap:10px;
+">
+
+<img src="https://seeklogo.com/images/V/visa-logo-B9975B8732-seeklogo.com.png"
+style="height:22px;background:white;padding:4px;border-radius:6px;">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+style="height:22px;width:auto;background:white;padding:4px;border-radius:6px;">
 
 </button>
 
-<a href="https://www.paypal.me/LindaLippincott"
+<a href="https://paypal.me/LindaLippincott"
 target="_blank"
 style="text-decoration:none;">
 
@@ -500,24 +536,76 @@ font-weight:bold;
 cursor:pointer;
 ">
 
-💙 Donate with PayPal
+<div style="
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+width:100%;
+">
+
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+style="height:16px;">
+<span>Donate with PayPal</span>
+
+</div>
 
 </button>
 
 </a>
-
 <button class="btn share"
+style="
+grid-column:1/3;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+font-size:20px;
+"
 onclick="openShareModal()">
 
-Share
+<svg xmlns="http://www.w3.org/2000/svg"
+width="26"
+height="26"
+fill="white"
+viewBox="0 0 24 24">
+
+<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91
+12.7c.05-.23.09-.46.09-.7s-.03-.47-.09-.7l7-4.11A2.99
+2.99 0 0 0 18 7.91a3 3 0 1 0-2.83-4A3 3 0 0 0 15
+5c0 .24.04.47.09.7l-7 4.11A3 3 0 1 0 6
+15c.24 0 .47-.04.7-.09l7.13 4.19c-.05.2-.08.41-.08.62a3
+3 0 1 0 3-3z"/>
+
+</svg>
+
+<span>Share</span>
+
 
 </button>
 
 </div>         
         
-        <button class="btn" style="margin-top:12px;background:#111827;color:#fff;" onclick="toggleBank()">          
-            🏦 Bank Transfer (Manual)          
-        </button>          
+<button class="btn"
+style="
+margin-top:12px;
+background:#111827;
+color:#fff;
+width:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+font-size:20px;
+font-weight:bold;
+"
+onclick="toggleBank()">
+
+🏦 Bank Transfer Donation
+
+</button>
         
 <div id="bankSection">
 
@@ -719,14 +807,6 @@ Copy
                 View latest medical reports and doctor's updates.      
             </p>          
             <a href="#" style="color:#00a651; font-weight: bold; text-decoration: none;">View reports</a>      
-        </div>        
-        
-        <div class="card">          
-            <h3>💬 Recent Donations</h3>          
-            <div id="donationList" style="font-size:13px; color:#4b5563; margin-top:8px;">      
-                <p><b>Sarah Johnson</b> $25 <span style="font-size:11px; color:#999; float:right;">2h ago</span></p>      
-                <p><b>Ahmed Mohammed</b> $50 <span style="font-size:11px; color:#999; float:right;">5h ago</span></p>      
-                <p><b>Laura Brown</b> $10 <span style="font-size:11px; color:#999; float:right;">1d ago</span></p>      
             </div>      
             <a href="#" style="color:#00a651; font-weight: bold; text-decoration: none; display:block; margin-top: 15px;">See all donations</a>      
         </div>  
@@ -734,198 +814,143 @@ Copy
     
     <div class="card" style="margin-top: 20px;">          
         <h3>Leave a Comment</h3>          
-        <input id="commentName" placeholder="Your name">          
-        <textarea id="comment" placeholder="Leave a message..." rows="3" style="margin-top:10px; width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #d1d5db; box-sizing: border-box;"></textarea>          
-        <button class="btn" style="background:#00a651; color:#fff; padding:12px; margin-top:12px; font-size:15px; border-radius:8px;" onclick="postComment()">Post Comment</button>          
-        <div id="commentList" style="margin-top:15px; max-height:150px; overflow-y:auto;"></div>          
-    </div>  
-</div>      
+       
+<input id="commentName"
+placeholder="Your name"
+style="width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;box-sizing:border-box;">
 
-<div class="footer">          
-    🙏 May God bless everyone who supports this cause<br>    📧 globalchildrenrelief@gmail.com          
-    <strong>Global Care Foundation</strong>          
-</div>      
+<textarea id="comment"
+placeholder="Leave a message..."
+rows="3"
+style="margin-top:10px;width:100%;padding:12px;border-radius:10px;border:1px solid #d1d5db;box-sizing:border-box;"></textarea>
 
-<div id="popup"></div>      
-<div id="shareModal" class="modal-overlay" onclick="closeShareModal()">
+<button class="btn donate"
+onclick="submitComment()"
+style="margin-top:12px;width:100%;">
 
-<div class="modal-card" onclick="event.stopPropagation()">
+Post Comment
 
-<h3>Share Campaign</h3>
-
-<p>Choose an option to share with your friends and family.</p>
-
-<button class="modal-btn" style="background: #25d366;" onclick="shareWhatsApp()">
-💬 WhatsApp
-</button>
-
-<button class="modal-btn" style="background: #1877f2;" onclick="shareFacebook()">
-📘 Facebook
-</button>
-
-<button class="modal-btn" style="background: #1da1f2;" onclick="shareTwitter()">
-✖️ Twitter
-</button>
-
-<button class="modal-btn" style="background: #ea4335;" onclick="shareEmail()">
-✉️ Email
-</button>
-
-<button class="modal-btn" style="background: #374151;" onclick="shareSMS()">
-📱 SMS / Text
-</button>
-
-<button class="modal-btn" style="background: #065f46;" onclick="copyLink()">
-🔗 Copy Link
-</button>
-
-<button class="modal-btn" style="background: #10b981;" onclick="shareMore()">
-📱 More Options
-</button>
-
-<button class="modal-btn"
-style="background:#f3f4f6;color:#111;border:1px solid #ddd;"
-onclick="closeShareModal()">
-Cancel
 </button>
 
 </div>
+
+<div class="footer">
+© 2026 Global Care Foundation
+<strong>Together we can save lives ❤️</strong>
 </div>
+
+<div id="popup"></div>
 
 <script>
 
-const shareLink = "https://flutterwave.com/donate/ci3l7ae0qihq";
+let currentSymbol = "$";
 
-let currencySymbol = "$";
-let currencyCode = "USD";
+function changeCurrency(){
 
-function changeCurrency() {
+const select =
+document.getElementById("country");
 
-let select = document.getElementById("country");
+const symbol =
+select.options[select.selectedIndex]
+.getAttribute("data-symbol");
 
-let option = select.options[select.selectedIndex];
+currentSymbol = symbol;
 
-currencySymbol = option.getAttribute("data-symbol");
+document.getElementById("customAmount")
+.placeholder =
+symbol + " Enter amount";
 
-const currencyMap = {
-US:"USD",
-GB:"GBP",
-CA:"CAD",
-AU:"AUD",
-DE:"EUR",
-FR:"EUR",
-IT:"EUR",
-ES:"EUR",
-NL:"EUR",
-BE:"EUR",
-SE:"SEK",
-NO:"NOK",
-DK:"DKK",
-CH:"CHF",
-JP:"JPY",
-CN:"CNY",
-IN:"INR",
-BR:"BRL",
-MX:"MXN",
-ZA:"ZAR",
-KE:"KES",
-GH:"GHS",
-AE:"AED",
-SA:"SAR",
-TR:"TRY",
-RU:"RUB",
-KR:"KRW",
-SG:"SGD",
-NZ:"NZD",
-AR:"ARS",
-CL:"CLP",
-CO:"COP",
-PK:"PKR",
-BD:"BDT",
-EG:"EGP"
-};
+document.querySelectorAll(".amount-btn")
+.forEach(btn => {
 
-currencyCode = currencyMap[select.value] || "USD";
+const value =
+btn.getAttribute("data-value");
 
-document.getElementById("customAmount").placeholder =
-currencySymbol + " Enter amount";
+if(value !== "Other"){
 
-document.querySelectorAll(".amount-btn").forEach(btn => {
+btn.innerText = symbol + value;
 
-let val = btn.getAttribute("data-value");
-
-if(val !== "Other") {
-btn.innerText = currencySymbol + val;
 }
 
 });
 
 }
 
-function setAmount(e, amount) {
+function setAmount(event, amount){
 
 document.querySelectorAll(".amount-btn")
-.forEach(btn => btn.classList.remove("active"));
+.forEach(btn=>{
+btn.classList.remove("active");
+});
 
-e.target.classList.add("active");
+event.target.classList.add("active");
 
-if(amount === "Other") {
+if(amount === "Other"){
 
-document.getElementById("customAmount").value = "";
+document.getElementById("customAmount")
+.value = "";
 
-} else {
-
-document.getElementById("customAmount").value =
-currencySymbol + amount;
-
-}
+return;
 
 }
 
-function payNow() {
+document.getElementById("customAmount")
+.value = amount;
 
-let amountStr =
-document.getElementById("customAmount").value;
+}
 
-let amount =
-parseFloat(amountStr.replace(/[^0-9.]/g,'')) || 5;
+function payNow(){
+
+const amount =
+document.getElementById("customAmount")
+.value.replace(/[^0-9.]/g,'');
+
+const email =
+document.getElementById("email").value;
+
+if(!amount){
+
+alert("Please enter amount");
+
+return;
+
+}
 
 FlutterwaveCheckout({
 
 public_key:
 "FLWPUBK-68077a508f28acedb751c074d1d55435-X",
 
-tx_ref: "txref-" + Date.now(),
+tx_ref:
+"donation-" + Date.now(),
 
 amount: amount,
 
-currency: currencyCode,
+currency: "USD",
+
+payment_options:
+"card,ussd,banktransfer",
 
 customer: {
 
-email:
-document.getElementById("email").value
-|| "donor@example.com",
+email: email || "donor@email.com",
 
 name:
-document.getElementById("donorName").value
-|| "Anonymous Donor"
-
-},
-
-callback: function(data) {
-
-alert("Payment Successful!");
+document.getElementById("donorName")
+.value || "Anonymous"
 
 },
 
 customizations: {
 
-title: "Global Child Support",
+title:
+"Global Care Foundation",
 
-description: "Donation Payment",
+description:
+"Donation Payment",
 
-logo: "support.jpg"
+logo:
+"support.jpg"
 
 }
 
@@ -933,124 +958,328 @@ logo: "support.jpg"
 
 }
 
-function toggleBank() {
+function toggleBank(){
 
-let bank = document.getElementById("bankSection");
+const bank =
+document.getElementById("bankSection");
 
-bank.style.display =
-(bank.style.display === "block")
-? "none"
-: "block";
+if(bank.style.display === "block"){
+
+bank.style.display = "none";
+
+}else{
+
+bank.style.display = "block";
 
 }
 
-function copyText(text) {
+}
+
+function copyText(text){
 
 navigator.clipboard.writeText(text);
 
-alert("Copied!");
+showPopup("Copied ❤️");
 
 }
 
-function copyLink() {
+function showPopup(message){
 
-navigator.clipboard.writeText(shareLink);
+const popup =
+document.getElementById("popup");
 
-alert("Link copied!");
+popup.innerText = message;
+
+popup.classList.add("show");
+
+setTimeout(()=>{
+
+popup.classList.remove("show");
+
+},2000);
 
 }
 
-function shareWhatsApp() {
+function copyLink(){
+
+navigator.clipboard.writeText(
+window.location.href
+);
+
+showPopup("Link copied ❤️");
+
+}
+
+function shareFacebook(){
+
+window.open(
+"https://www.facebook.com/sharer/sharer.php?u=" +
+encodeURIComponent(window.location.href),
+"_blank"
+);
+
+}
+
+function shareWhatsApp(){
 
 window.open(
 "https://wa.me/?text=" +
-encodeURIComponent(shareLink)
+encodeURIComponent(window.location.href),
+"_blank"
 );
 
 }
 
-function shareFacebook() {
+function shareTwitter(){
 
 window.open(
-"https://www.facebook.com/sharer/sharer.php?u="
-+ encodeURIComponent(shareLink)
+"https://twitter.com/intent/tweet?url=" +
+encodeURIComponent(window.location.href),
+"_blank"
 );
 
 }
 
-function shareTwitter() {
+function shareEmail(){
 
+window.location.href =
+"mailto:?subject=Support this fundraiser&body=" +
+encodeURIComponent(window.location.href);
+
+}
+
+function openShareModal(){
+
+let link = window.location.href;
+
+let modal = document.createElement("div");
+
+modal.innerHTML = `
+
+<div style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+">
+
+<div style="
+background:white;
+width:90%;
+max-width:380px;
+padding:20px;
+border-radius:20px;
+text-align:center;
+font-family:Arial;
+">
+
+<h2 style="margin-top:0;">
+Share Campaign
+</h2>
+
+<p style="color:#666;font-size:14px;">
+Choose an option to share with your friends and family
+</p>
+
+<button onclick="
 window.open(
-"https://twitter.com/intent/tweet?url="
-+ encodeURIComponent(shareLink)
-);
+'https://wa.me/?text=' +
+encodeURIComponent(link),
+'_blank'
+)
+"
+style="
+width:100%;
+padding:14px;
+margin:6px 0;
+border:none;
+border-radius:12px;
+background:#25D366;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+💬 WhatsApp
+</button>
 
-}
+<button onclick="
+window.open(
+'https://www.facebook.com/sharer/sharer.php?u=' +
+encodeURIComponent(link),
+'_blank'
+)
+"
+style="
+width:100%;
+padding:14px;
+margin:6px 0;
+border:none;
+border-radius:12px;
+background:#1877F2;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+📘 Facebook
+</button>
 
-function shareEmail() {
+<button onclick="
+window.open(
+'https://twitter.com/intent/tweet?url=' +
+encodeURIComponent(link),
+'_blank'
+)
+"
+style="
+width:100%;
+padding:14px;
+margin:6px 0;
+border:none;
+border-radius:12px;
+background:#1DA1F2;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+✖️ Twitter
+</button>
 
+<button onclick="
 window.location.href =
-"mailto:?subject=Donate&body=" + shareLink;
+'mailto:?subject=Support this fundraiser&body=' +
+encodeURIComponent(link)
+"
+style="
+width:100%;
+padding:14px;
+margin:6px 0;
+border:none;
+border-radius:12px;
+background:#EA4335;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+✉️ Email
+</button>
 
-}
-
-function shareSMS() {
-
+<button onclick="
 window.location.href =
-"sms:?body=" + shareLink;
+'sms:?body=' +
+encodeURIComponent(link)
+"
+style="
+width:100%;
+padding:14px;
+margin:6px 0;
+border:none;
+border-radius:12px;
+background:#374151;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+📱 SMS / Text
+</button>
 
-}
+<button onclick="
+navigator.clipboard.writeText(link);
+alert('Link copied ❤️');
+"
+style="
+width:100%;
+padding:14px;
+margin:6px 0;
+border:none;
+border-radius:12px;
+background:#065F46;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+🔗 Copy Link
+</button>
 
-function shareMore() {
-
-if(navigator.share) {
-
+<button onclick="
+if(navigator.share){
 navigator.share({
-title: "Global Child Support",
-url: shareLink
+title:'Global Care Foundation',
+text:'Support this fundraiser ❤️',
+url:link
 });
+}
+"
+style="
+width:100%;
+padding:14px;
+margin:6px 0;
+border:none;
+border-radius:12px;
+background:#10B981;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+📲 More Options
+</button>
 
-} else {
+<button onclick="
+this.closest('div').parentElement.remove()
+"
+style="
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+background:#f3f4f6;
+color:#111;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+">
+Cancel
+</button>
 
-copyLink();
+</div>
+</div>
+
+`;
+
+document.body.appendChild(modal);
 
 }
 
-}
+function submitComment(){
 
-function openShareModal() {
-
-document.getElementById("shareModal").style.display = "flex";
-
-}
-
-function closeShareModal() {
-
-document.getElementById("shareModal").style.display = "none";
-
-}
-
-function postComment() {
-
-let name =
+const name =
 document.getElementById("commentName").value;
 
-let comment =
+const comment =
 document.getElementById("comment").value;
 
-if(!name || !comment) {
+if(!name || !comment){
 
-alert("Please fill everything");
+alert("Please enter your name and comment");
 
 return;
 
 }
 
-let commentBox =
-document.getElementById("commentList");
-
-commentBox.innerHTML +=
-"<p><b>" + name + "</b>: " + comment + "</p>";
+showPopup("Comment posted ❤️");
 
 document.getElementById("commentName").value = "";
 
@@ -1058,9 +1287,7 @@ document.getElementById("comment").value = "";
 
 }
 
-changeCurrency();
-
 </script>
 
 </body>
-</html>       
+</html>
